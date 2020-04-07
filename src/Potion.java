@@ -1,5 +1,5 @@
 import java.util.*;
-public abstract class Potion implements Buyable{
+public abstract class Potion extends Item implements Buyable{
     protected String type = "Potion";
     protected String name;
     protected int cost;

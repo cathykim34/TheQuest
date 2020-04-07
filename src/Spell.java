@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class Spell implements Buyable {
+public abstract class Spell extends Item implements Buyable {
     protected String type = "Spell";
     protected String name;
     protected int cost;

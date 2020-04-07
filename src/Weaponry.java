@@ -1,7 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Weaponry implements Buyable{
+public class Weaponry extends Item implements Buyable{
     protected String type = "Weaponry";
     protected String name;
     protected int cost;

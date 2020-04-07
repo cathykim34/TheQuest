@@ -1,5 +1,5 @@
 import java.util.*;
-public class Armory implements Buyable{
+public class Armory extends Item implements Buyable{
     protected String name;
     protected int cost;
     protected int required_level;
