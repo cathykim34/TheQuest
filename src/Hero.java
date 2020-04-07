@@ -2,6 +2,7 @@ import java.util.*;
 public abstract class Hero extends Characters{
     protected String type = "Hero";
     protected String name;
+    protected String nickname;
     protected int level;
     protected int HP;
     protected Wallet wallet;
@@ -13,6 +14,8 @@ public abstract class Hero extends Characters{
     protected Armory armor;
     protected Backpack backpack;
     protected String favoredSkills;
+    protected int row;
+    protected int column;
 
 
     //just to use as menu lists
@@ -53,6 +56,26 @@ public abstract class Hero extends Characters{
     public abstract String getBackpack();
     public abstract void addXP(int i);
     public abstract void makeMove(Monster m);
+    public int getRow() {
+        return row;
+    }
+    public void setRow(int row) {
+        this.row = row;
+    }
+    public int getColumn() {
+        return column;
+    }
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
 
     public static ArrayList<String> listGetter(){
