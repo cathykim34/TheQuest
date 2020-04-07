@@ -6,49 +6,16 @@ public class BoardDriver {
 
     //returns board with user chosen dimensions
     public Board createBoard(){
-        System.out.println("Lets start by picking a board board.");
-        int[] dimensions = chooseBoardSize();
-        Board board = new Board(dimensions[0], dimensions[1]);
+        Board board = new Board(8, 8);
         System.out.println("THE QUEST GAME BOARD:");
         System.out.println(board);
-        System.out.println("The X represents where you currently are on the map.");
-        System.out.println("The places with a line through the tile represents a wall meaning you are unable to go into that tile on the board.");
-        System.out.println("The letter 'M' represents the market where your characters can buy and sell items.");
+        System.out.println("H1, H2, and H3 represent where your heroes currently are on the map.");
+        System.out.println("A tile filled with I's represents a wall means that is an inaccessible tile on the board.");
+        System.out.println("Your characters can buy and sell items in your Nexus, the tile outlined by N's.");
         System.out.println("\n");
         return board;
     }
 
-    //getting row and col
-    public int[] chooseBoardSize(){
-        int[] dimensions = new int[2];
-        System.out.println("You may choose a board with each dimension being between 5 and 10 units");
-        dimensions[0] = chooseDimension("row");
-        dimensions[1] = chooseDimension("column");
-        return dimensions;
-    }
-
-    //choose dimension length for each row and col
-    private int chooseDimension(String s){
-        Scanner input = new Scanner(System.in);
-        boolean invalidInput = true;
-        do{
-            System.out.println("Please enter a number between 5 and 10 for the " + s + " length");
-            try{
-                String in = input.next();
-                int chosen = Integer.parseInt(in);
-                if(chosen >= 5 && chosen <= 10 ){
-                    System.out.println(s +" length has been set to " + chosen);
-                    return chosen;
-                }
-                else{
-                    System.out.println("Please enter a valid input");
-                }
-            }catch (Exception e){
-                System.out.println("Please enter a valid input.");
-            }
-        }while(invalidInput);
-        return 0;
-    }
 
     public void takePotion(Hero h){
         if(h.getBP().getPotions().isEmpty()){
