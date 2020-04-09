@@ -1,5 +1,5 @@
 import java.util.*;
-public class Dragon extends Monster {
+public class Dragon extends Monster implements Fight{
     protected String type = "Dragon";
     protected String name;
     protected int level;
@@ -74,11 +74,22 @@ public class Dragon extends Monster {
     public void getSpellCasted(double d){
         this.damage -= d;
     }
-    //helper function to getAttacked for dodge probability
-    private boolean attackDodged(){
+
+    @Override
+    public void makeMove(Monster m) {
+
+    }
+    @Override
+    public void getAttacked(Monster m) {
+
+    }
+
+    @Override
+    public boolean attackDodged(){
         double ran = Math.random();
         return(ran <= this.dodge_chance);
     }
+
 
     //check if monster has been defeated
     public boolean checkDeath(){
