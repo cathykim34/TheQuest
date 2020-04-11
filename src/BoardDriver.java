@@ -74,7 +74,7 @@ public class BoardDriver {
                     enterQuit = true;
                 }
                 else if(currentInput.equals("I")){
-                    for(Characters hero: team.getTeam()){
+                    for(Hero hero: team.getTeam()){
                         System.out.println(hero);
                         String response = QD.giveOptions();
                         if(response.equals("P")){

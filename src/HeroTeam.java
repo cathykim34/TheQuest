@@ -8,7 +8,7 @@ public class HeroTeam extends Team {
         heroes = new ArrayList<>();
     }
 
-    public ArrayList<? extends Characters> getTeam() {
+    public ArrayList<Hero> getTeam() {
         return this.heroes;
     }
 

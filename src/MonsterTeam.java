@@ -6,8 +6,7 @@ public class MonsterTeam extends Team {
         monsters = new ArrayList<>();
     }
 
-    @Override
-    public ArrayList<? extends Characters> getTeam() {
+    public ArrayList<Monster> getTeam() {
         return this.monsters;
     }
 
