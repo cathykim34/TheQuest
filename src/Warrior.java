@@ -14,6 +14,9 @@ public class Warrior extends Hero implements Fight{
     protected Weaponry weapon;
     protected Armory armor;
     protected Backpack backpack;
+    protected int row;
+    protected int column;
+    protected int lane;
     protected static ArrayList<Hero> all = new ArrayList<>();
 
     public Warrior(String name, int mana, int strength, int agility, int dexterity, int starting_money, int starting_exp){

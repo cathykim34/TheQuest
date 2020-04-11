@@ -15,6 +15,9 @@ public class Paladin extends Hero implements Fight{
     protected Weaponry weapon;
     protected Armory armor;
     protected Backpack backpack;
+    protected int row;
+    protected int column;
+    protected int lane;
     private static ArrayList<Hero> all = new ArrayList<>();
 
     public Paladin(){}

@@ -40,6 +40,22 @@ public class Board {
     public boolean boardEdge(int col, int row){
         return(col >= this.column && row >= this.row);
     }
+    //make move
+//    public void updateBoard(int col, int row, Hero h){
+        // Remove hero from contents of previous BoardCell
+
+
+
+        //so to show blank on map instead of C
+//        String currType = this.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
+//        if(currType.equals("C")) {
+//            this.current[Team.getCurRow()][Team.getCurCol()] = "";
+//        }
+//        else{
+//            this.current[Team.getCurRow()][Team.getCurCol()] = currType;
+//        }
+//        this.current[row][col] = "X";
+
 
 
     //returns whether that move is possible or not
@@ -115,6 +131,7 @@ public class Board {
                 } else {
                     System.out.println("Oops! This cell is at max capacity.");
                 }
+
             }else{
                 System.out.println("Oof hit a wall!");
             }
@@ -176,6 +193,7 @@ public class Board {
                 result[i] = "  ";
             }
         }
+
         return result;
     }
 

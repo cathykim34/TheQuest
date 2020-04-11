@@ -11,6 +11,7 @@ public class BoardCell {
     public BoardCell(String s){
         this.type = s;
         this.capacity = 2;
+        this.contents = new Characters[this.capacity];
     }
     public void setType(String s){
         this.type = s;
@@ -59,5 +60,6 @@ public class BoardCell {
             }
         }
         return true;
+
     }
 }
