@@ -110,7 +110,9 @@ Weaponry: superclass that has general attributes and constructor that any specif
 	-Shield
 	-TSwords
 	-Dagger
-Team: class to choose heroes that user will use, assuming that only one instance of each character is possible
+Team: superclass to monster and hero teams that has general attributes that each subclass should have as well
+    -MonsterTeam: creates the three monsters every eight rounds matching the corresponding lane hero's level
+    -HeroTeam: choose the three heroes user wants, assuming that only one instance of each character is possible
 
 BackPack: to keep current list of items that heroes have (e.g. potions, spells, weapons and armory)
 
@@ -125,5 +127,5 @@ Quest driver: initializes a lot of pre game items (like heroes, etc).
 Game Driver: simply starting point to lead to other drivers
 
 Board Driver: deals with board movements (note: movement like hitting the wall is like bouncing back to the square you are currently in which means you get a chance at fighting in a common tile or going into the market)
-Board class: physical board
+Board class: physical board (assuming each lane takes up two column and each "row" or cell takes up three rows and walls take up single column))
 Board cell: tells us what kind of tile (market, common, etc)

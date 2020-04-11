@@ -16,7 +16,7 @@ public abstract class Hero extends Characters{
     protected String favoredSkills;
     protected int row;
     protected int column;
-
+    protected int lane;
 
     //just to use as menu lists
     protected static ArrayList<String> allHeroes = new ArrayList<>();
@@ -77,10 +77,16 @@ public abstract class Hero extends Characters{
         this.nickname = nickname;
     }
 
+    public int getLane() {
+        return lane;
+    }
+
+    public void setLane(int lane) {
+        this.lane = lane;
+    }
 
     public static ArrayList<String> listGetter(){
         return Hero.allHeroes;
     }
 
-//    public abstract ArrayList<Spell> currentSpells();
 }

@@ -31,11 +31,21 @@ public class QuestDriver{
         md.play(m);
     }
 
-    public Team createTeam(){
+    public HeroTeam createHeroTeam(Board board){
         System.out.println("Now lets pick your team of heroes!");
-        Team t = new Team();
-        t.addHeroes();
+        HeroTeam t = new HeroTeam();
+        t.addHeroes(board);
         return t;
+    }
+
+    public MonsterTeam createMonsterTeam(HeroTeam heroes){
+        System.out.println("Meet your opponents!");
+        MonsterTeam m = new MonsterTeam();
+        m.addMonsters(heroes);
+        for(Characters monster : m.getTeam()){
+            System.out.println(monster);
+        }
+        return m;
     }
 
     //probability that battle appears in common tile

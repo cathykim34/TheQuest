@@ -4,7 +4,7 @@ public class BoardDriver {
     public BoardDriver() {
     }
 
-    //returns board with user chosen dimensions
+    //returns board
     public Board createBoard(){
         Board board = new Board(8, 8);
         System.out.println("THE QUEST GAME BOARD:");
@@ -53,11 +53,12 @@ public class BoardDriver {
     }
 
     //enter board game to start playing
-    public void enterTheWorld(Team team, Board board, QuestDriver QD){
+    public void enterTheWorld(HeroTeam team, Board board, QuestDriver QD){
 
         Scanner input = new Scanner(System.in);
         //prepare the market items
         QD.setUpMarket();
+        QD.createMonsterTeam(team);
         boolean enterQuit = false;
         do{
             System.out.println("To move around the board, enter W to move up, A to move left, S to move down and D to move right");
@@ -73,7 +74,7 @@ public class BoardDriver {
                     enterQuit = true;
                 }
                 else if(currentInput.equals("I")){
-                    for(Hero hero: Team.getHeroes()){
+                    for(Characters hero: team.getTeam()){
                         System.out.println(hero);
                         String response = QD.giveOptions();
                         if(response.equals("P")){

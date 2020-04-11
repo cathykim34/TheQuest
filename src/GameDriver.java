@@ -1,6 +1,7 @@
 public class GameDriver {
     public static void main(String[] args){
         System.out.println("Welcome to the Quest!!");
+
         //create board
         BoardDriver BD = new BoardDriver();
         Board board = BD.createBoard();
@@ -9,8 +10,8 @@ public class GameDriver {
         QuestDriver QD = new QuestDriver();
         QD.createHeroes();
 
-        //playing on game
-        BD.enterTheWorld(QD.createTeam(), board, QD);
+        //playing game
+        BD.enterTheWorld(QD.createHeroTeam(board), board, QD);
 
 
     }
