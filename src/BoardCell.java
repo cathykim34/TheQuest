@@ -3,6 +3,16 @@ public class BoardCell {
     private int capacity; // How many players can be in a cell at a given time
     private Characters[] contents; // Characters in the cell
 
+    public int getLaneNumber() {
+        return laneNumber;
+    }
+
+    public void setLaneNumber(int laneNumber) {
+        this.laneNumber = laneNumber;
+    }
+
+    private int laneNumber;
+
     public BoardCell(){
         this.type = "";
         this.capacity = 2;

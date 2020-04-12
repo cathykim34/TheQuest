@@ -4,13 +4,15 @@ public class Board {
     public int row;
     public int column;
     public BoardCell[][] boardArray;
-    String[][] current;
+    public Lane[] lanes;
 
     public Board(int row, int column){
         this.row = row;
         this.column = column;
         this.boardArray = new BoardCell[row][column];
-        this.current = new String[row][column];
+        this.lanes = new Lane[3];
+
+        // Make boardArray
         for(int i = 0; i < row; i++){
             if (i == 0 || i == row-1) {
                 makeRow(i, true);
@@ -18,7 +20,59 @@ public class Board {
                 makeRow(i, false);
             }
         }
+
+        // Assign cells to lanes
+        int colPlaceholder = 0; // keep track of which column the lane starts at
+        int colsPerLane = (this.boardArray.length - (this.lanes.length-1))/this.lanes.length; // How many cols each lane will have
+        for (int lane = 0; lane < this.lanes.length; lane++) {
+            this.lanes[lane] = new Lane(lane, getLane(0, this.boardArray.length, colPlaceholder, colPlaceholder+colsPerLane-1));
+            colPlaceholder += (colsPerLane+1);
+        }
     }
+
+
+    // Get the cells to put in a given lane; inputs are the range (inclusive) of rows and cols
+    private BoardCell[][] getLane(int startRow, int endRow, int startCol, int endCol) {
+        BoardCell[][] result = new BoardCell[endRow-startRow+1][endCol-startCol+1];
+        int curRow = 0;
+        int curCol = 0;
+        for (int i = startRow; i <= endRow; i++) {
+            for (int j = startCol; j <= endCol; j++) {
+                result[curRow][curCol] = this.boardArray[i][j];
+                curCol++;
+            }
+            curRow++;
+        }
+        return result;
+    }
+
+
+    private void makeRow(int rowIndex, boolean isNexusRow) {
+        String result = "";
+        String cellType = "N";
+
+        for (int j = 0; j < this.column; j++) {
+            if (!isNexusRow) {
+                // If not a nexus row, we can pick a random cell type
+                cellType = pickRandomCellType();
+            }
+            if (j == this.row/3 || j == (2*this.row)/3) {
+                // These columns are the 2 barrier walls between the 3 lanes, so they are type "I"
+                cellType = "I";
+            }
+            BoardCell cell = new BoardCell(cellType);
+            this.boardArray[rowIndex][j] = cell;
+        }
+    }
+
+    private static String pickRandomCellType() {
+        String[] types = { "p", "p", "p", "p", "p", "p", "p", "k", "c", "b" };
+        Random r = new Random();
+        int randomIndex = r.nextInt(types.length);
+        return types[randomIndex];
+    }
+
+
     //check if input is a valid movement
     public boolean validInput(String s){
         return(s.equals("W")||s.equals("D")|| s.equals("A")|| s.equals("S")|| s.equals("I") || s.equals("Q"));
@@ -40,23 +94,6 @@ public class Board {
     public boolean boardEdge(int col, int row){
         return(col >= this.column && row >= this.row);
     }
-    //make move
-//    public void updateBoard(int col, int row, Hero h){
-        // Remove hero from contents of previous BoardCell
-
-
-
-        //so to show blank on map instead of C
-//        String currType = this.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
-//        if(currType.equals("C")) {
-//            this.current[Team.getCurRow()][Team.getCurCol()] = "";
-//        }
-//        else{
-//            this.current[Team.getCurRow()][Team.getCurCol()] = currType;
-//        }
-//        this.current[row][col] = "X";
-
-
 
     //returns whether that move is possible or not
     public boolean makeMove(Hero hero, String move) {
@@ -198,29 +235,5 @@ public class Board {
     }
 
 
-    private void makeRow(int rowIndex, boolean isNexusRow) {
-        String result = "";
-        String cellType = "N";
-
-        for (int j = 0; j < this.column; j++) {
-            if (!isNexusRow) {
-                // If not a nexus row, we can pick a random cell type
-                cellType = pickRandomCellType();
-            }
-            if (j == this.row/3 || j == (2*this.row)/3) {
-                // These columns are the 2 barrier walls between the 3 lanes, so they are type "I"
-                cellType = "I";
-            }
-            BoardCell cell = new BoardCell(cellType);
-            this.boardArray[rowIndex][j] = cell;
-        }
-    }
-
-    private static String pickRandomCellType() {
-        String[] types = { "p", "p", "p", "p", "p", "p", "p", "k", "c", "b" };
-        Random r = new Random();
-        int randomIndex = r.nextInt(types.length);
-        return types[randomIndex];
-    }
 
 }
