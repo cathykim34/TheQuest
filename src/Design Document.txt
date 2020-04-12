@@ -2,12 +2,11 @@ Group #20
 Sarah Rieger (U47427637)
 Catherine Kim (U51788489)
 
+This class is exactly as in the previous implementation of Catherine's code with the added difference of DESCRIPTION HERE. We decided to add this difference because
 
-Compilation Instructions:
-javac GameDriver.java
-java GameDriver
+This is a completely new class that we added because
 
-Usability of each class:
+Classes:
 Armory: class that has the general attributes and constructor that any specific armory pieces will invoke using the keyword super (assumed that characters can only use one piece of armory at a time)
 	Subclasses that allow for scalability should specific armor pieces have other effects in updated versions of the game:
 	-Breastplate (duplicate ignored in provided file)
@@ -112,20 +111,26 @@ Weaponry: superclass that has general attributes and constructor that any specif
 	-Shield
 	-TSwords
 	-Dagger
-Team: class to choose heroes that user will use, assuming that only one instance of each character is possible
+Team: This is a completely new class that we added based off of the original Team object of Catherine's code that is actually the abstract class to MonsterTeam and HeroTeam because we decided that for better encapsulation of the two teams as well as scalability because then should the game ever need more teams of any other type of character, another team can easily be added under Team.
+	-MonsterTeam + HeroTeam both are completely new classes added for better encapsulation and inheritance.
+	
 
-BackPack: to keep current list of items that heroes have (e.g. potions, spells, weapons and armory)
+BackPack: 
 
-Buyable Interface: keeps a running list of items that can be bought, for objects that can be sold and whether an object can be bought
+Buyable Interface: 
 
-Fight interface: ensuring heroes have necessary methods for the fight
+Fight interface: 
 
-Fight driver: runs the actual fight (the order is randomly given to heroes and one at a time will fight the monsters until the hero faints or all the monsters are killed) assumed that for a turn hero can only change armor or weapon
+Fight driver: 
 
-Quest driver: initializes a lot of pre game items (like heroes, etc).
+Quest driver: 
 
-Game Driver: simply starting point to lead to other drivers
+Game Driver: 
 
-Board Driver: deals with board movements (note: movement like hitting the wall is like bouncing back to the square you are currently in which means you get a chance at fighting in a common tile or going into the market)
-Board class: physical board
-Board cell: tells us what kind of tile (market, common, etc)
+Board Driver: 
+
+Board class: 
+
+Board cell: 
+
+Lanes: 
