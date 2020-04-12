@@ -61,12 +61,16 @@ public class Board {
                 cellType = "I";
             }
             BoardCell cell = new BoardCell(cellType);
+            if (isNexusRow && rowIndex != 0) {
+                // Hero nexus must be identified as such
+                cell.setHeroNexus(true);
+            }
             this.boardArray[rowIndex][j] = cell;
         }
     }
 
     private static String pickRandomCellType() {
-        String[] types = { "p", "p", "p", "p", "p", "p", "p", "k", "c", "b" };
+        String[] types = { "P", "P", "P", "P", "P", "P", "P", "K", "C", "B" };
         Random r = new Random();
         int randomIndex = r.nextInt(types.length);
         return types[randomIndex];
