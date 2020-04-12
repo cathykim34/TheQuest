@@ -3,6 +3,16 @@ public class BoardCell {
     private int capacity; // How many players can be in a cell at a given time
     private Characters[] contents; // Characters in the cell
 
+    public boolean getIsHeroNexus() {
+        return isHeroNexus;
+    }
+
+    public void setHeroNexus(boolean heroNexus) {
+        isHeroNexus = heroNexus;
+    }
+
+    private boolean isHeroNexus;
+
     public int getLaneNumber() {
         return laneNumber;
     }
@@ -17,11 +27,13 @@ public class BoardCell {
         this.type = "";
         this.capacity = 2;
         this.contents = new Characters[this.capacity];
+        this.isHeroNexus = false;
     }
     public BoardCell(String s){
         this.type = s;
         this.capacity = 2;
         this.contents = new Characters[this.capacity];
+        this.isHeroNexus = false;
     }
     public void setType(String s){
         this.type = s;
@@ -72,4 +84,39 @@ public class BoardCell {
         return true;
 
     }
+
+    public void cellAction(Hero hero) {
+        if (this.type.equals("B")) {
+            // Bush cells
+            int dexterity = hero.getDexterity();
+            dexterity = (int) Math.round(dexterity + (dexterity*0.1));
+            hero.setDexterity(dexterity);
+        } else if (this.type.equals("K")) {
+            // Koulou cells
+            int strength = hero.getStrength();
+            strength = (int) Math.round(strength + (strength*0.1));
+            hero.setStrength(strength);
+        } else if (this.type.equals("C")) {
+            // Cave cells
+            int agility = hero.getAgility();
+            agility = (int) Math.round(agility + (agility*0.1));
+            hero.setAgility(agility);
+        } else if (this.type.equals("N")) {
+            // Nexus cells
+            if (!isHeroNexus) {
+                // TODO: game won action
+            } else {
+                nexusCellAction(hero);
+            }
+        }
+    }
+
+    public void nexusCellAction(Hero hero) {
+        hero.revive();
+
+        Market market = new Market();
+        MarketDriver driver = new MarketDriver();
+        driver.play(market);
+    }
+
 }
