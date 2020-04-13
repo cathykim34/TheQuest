@@ -2,6 +2,7 @@ import java.util.*;
 public abstract class Hero extends Characters{
     protected String type = "Hero";
     protected String name;
+    protected String nickname;
     protected int level;
     protected int HP;
     protected Wallet wallet;
@@ -13,7 +14,9 @@ public abstract class Hero extends Characters{
     protected Armory armor;
     protected Backpack backpack;
     protected String favoredSkills;
-
+    protected int row;
+    protected int column;
+    protected int lane;
 
     //just to use as menu lists
     protected static ArrayList<String> allHeroes = new ArrayList<>();
@@ -53,11 +56,37 @@ public abstract class Hero extends Characters{
     public abstract String getBackpack();
     public abstract void addXP(int i);
     public abstract void makeMove(Monster m);
+    public int getRow() {
+        return row;
+    }
+    public void setRow(int row) {
+        this.row = row;
+    }
+    public int getColumn() {
+        return column;
+    }
+    public void setColumn(int column) {
+        this.column = column;
+    }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getLane() {
+        return lane;
+    }
+
+    public void setLane(int lane) {
+        this.lane = lane;
+    }
 
     public static ArrayList<String> listGetter(){
         return Hero.allHeroes;
     }
 
-//    public abstract ArrayList<Spell> currentSpells();
 }
