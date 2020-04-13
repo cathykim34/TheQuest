@@ -88,10 +88,13 @@ public class Board {
         return(b.getType().equals("I"));
     }
 
-    // CHeck if there is a fight to take place
+    //Check if there is a fight to take place
     public boolean isFight() {
         return false;
     }
+
+    //Check cells around you
+    public boolean enemyNear(Character character)
 
 
     //check if chosen movement exists on board

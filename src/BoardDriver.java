@@ -58,7 +58,7 @@ public class BoardDriver {
         Scanner input = new Scanner(System.in);
         //prepare the market items
         QD.setUpMarket();
-        QD.createMonsterTeam(team);
+        MonsterTeam monsters = QD.createMonsterTeam(team);
         boolean enterQuit = false;
         do{
             System.out.println("To move around the board, enter W to move up, A to move left, S to move down and D to move right");
@@ -76,35 +76,34 @@ public class BoardDriver {
                 else if(currentInput.equals("I")){
                     for(Hero hero: team.getTeam()){
                         System.out.println(hero);
-                        String response = QD.giveOptions();
-                        if(response.equals("P")){
-                            takePotion(hero);
-                        }
-                        else if(response.equals("C")){
-                            if(hero.changeNotPossible()){
-                                System.out.println("Currently do not own any armor or weapons.");
-                            }
-                            else{
-                                change(hero);
-                            }
-                        }
-
+//                        String response = QD.giveOptions();
+//                        if(response.equals("P")){
+//                            takePotion(hero);
+//                        }
+//                        else if(response.equals("C")){
+//                            if(hero.changeNotPossible()){
+//                                System.out.println("Currently do not own any armor or weapons.");
+//                            }
+//                            else{
+//                                change(hero);
+//                            }
+//                        }
                     }
                 }
                 else if(currentInput.equals("W")||currentInput.equals("A") || currentInput.equals("S")|| currentInput.equals("D")){
-                    boolean possible = board.makeMove(team, currentInput);
-                    String currentPlace = board.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
-                    //check if current place is a common square
-                    if(!possible){
-                        System.out.println("Try moving somewhere else!");
-                    }
-                    else if(currentPlace.equals("C")){
-                        QD.checkForBattle();
-                    }
-                    //check if current place is a market
-                    else if(currentPlace.equals("M")){
-                        QD.market();
-                    }
+//                    boolean possible = board.makeMove(team, currentInput);
+//                    String currentPlace = board.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
+//                    //check if current place is a common square
+//                    if(!possible){
+//                        System.out.println("Try moving somewhere else!");
+//                    }
+//                    else if(currentPlace.equals("C")){
+//                        QD.checkForBattle();
+//                    }
+//                    //check if current place is a market
+//                    else if(currentPlace.equals("M")){
+//                        QD.market();
+//                    }
                 }
                 else{
                     System.out.println("Invalid input, please try again.");
@@ -113,7 +112,22 @@ public class BoardDriver {
                 System.out.println("Invalid move, please try again.");
             }
 
+            for(Monster m: monsters.getTeam()){
+                m.makeMove(board);
+            }
+            MonsterTeam.increaseRound();
+            if(MonsterTeam.getRounds() == 8){
+                nextRound(monsters, team);
+            }
+            team.roundHealthIncrease();
+
         }while(!enterQuit);
         System.out.println("Thanks for playing the Quest, hope you a had a great time!");
+    }
+
+    //resets round counter, spawns new monsters
+    public void nextRound(MonsterTeam monsters, HeroTeam team){
+        MonsterTeam.setRounds(1);
+        monsters.addMonsters(team);
     }
 }

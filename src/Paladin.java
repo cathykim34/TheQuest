@@ -4,7 +4,7 @@ public class Paladin extends Hero implements Fight{
     protected static String type = "Paladin";
     protected String name;
     protected int level;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
     protected double mana;
     protected double strength;
@@ -95,16 +95,22 @@ public class Paladin extends Hero implements Fight{
     }
 
     @Override
-    public void setHP(int i){
+    public void setHP(double i){
         this.HP += i;
     }
+
+    @Override
+    public double getHP() {
+        return this.HP;
+    }
+
     @Override
     public void setStrength(int i) {
         this.strength += i;
     }
 
     @Override
-    public void setMana(int i) {
+    public void setMana(double i) {
         this.mana += i;
     }
     @Override

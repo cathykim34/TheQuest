@@ -54,6 +54,17 @@ public abstract class Monster extends Characters {
         return huge;
     }
 
+    //check if there are heroes in range to fight
+    public boolean needToAttack(Board board){
+        if()
+    }
+
+    //either move forward or fight
+    public void makeMove(Board board){
+
+    }
+
+
     public Monster(){}
 
     public String toString(){

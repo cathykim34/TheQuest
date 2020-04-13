@@ -1,6 +1,6 @@
 public class Lane {
-    private int laneNumber;
-    private BoardCell[][] cells;
+    protected int laneNumber;
+    protected BoardCell[][] cells;
 
     public Lane(int laneNumber, BoardCell[][] cells){
         this.laneNumber = laneNumber;

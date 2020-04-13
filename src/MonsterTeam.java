@@ -1,15 +1,56 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MonsterTeam extends Team {
     protected ArrayList<Monster> monsters;
+    protected static int rounds;
 
     public MonsterTeam(){
         monsters = new ArrayList<>();
+        rounds = 1;
     }
 
     public ArrayList<Monster> getTeam() {
         return this.monsters;
     }
+
+    //return appropriate list of monsters in a lane
+    public ArrayList<Monster> rightLane(Lane lane){
+        ArrayList<Monster> laneMonsters = new ArrayList<>();
+        for(int i = 0; i < this.monsters.size(); i++){
+            if(this.monsters.get(i).getLane().getLaneNumber() == lane.getLaneNumber()){
+                laneMonsters.add(this.monsters.get(i));
+            }
+        }
+        return laneMonsters;
+    }
+
+    //finds monster that is closest to hero's nexus
+    public int[] closestMonster(ArrayList<Monster> monsters){
+        int[] coordinates = new int[2];
+        int maxRow = monsters.get(0).getRow();
+        int maxCol = monsters.get(0).getColumn();
+        for(int i = 0; i < monsters.size(); i++){
+            if(monsters.get(i).getRow() > maxRow){
+                maxRow = monsters.get(i).getRow();
+                maxCol = monsters.get(i).getColumn();
+            }
+        }
+        coordinates[0] = maxRow;
+        coordinates[1] = maxCol;
+        return coordinates;
+    }
+
+    public static int getRounds() {
+        return rounds;
+    }
+
+    public static void increaseRound() {
+        MonsterTeam.rounds++;
+    }
+     public static void setRounds(int round){
+        MonsterTeam.rounds = round;
+     }
 
     //randomly create group of monsters of appropriate level
     public void addMonsters(HeroTeam heroTeam) {

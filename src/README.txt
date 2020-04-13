@@ -126,6 +126,6 @@ Quest driver: initializes a lot of pre game items (like heroes, etc).
 
 Game Driver: simply starting point to lead to other drivers
 
-Board Driver: deals with board movements (note: movement like hitting the wall is like bouncing back to the square you are currently in which means you get a chance at fighting in a common tile or going into the market)
+Board Driver: deals with board movements (note: movement like hitting the wall is like bouncing back to the square you are currently in which means you get a chance at fighting in a common tile or going into the market, assume b goes back to their starting nexus only)
 Board class: physical board
 Board cell: tells us what kind of tile (market, common, etc)

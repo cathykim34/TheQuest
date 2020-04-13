@@ -41,6 +41,15 @@ public class HeroTeam extends Team {
         while (validInput) ;
         return (list.get(0));
     }
+
+    //update hero health every round
+    public void roundHealthIncrease(){
+        for(Hero h: this.heroes){
+            h.setMana((h.getMana()*0.1));
+            h.setHP(h.getHP()*0.1);
+        }
+    }
+
     //helper function for first assigning positions at beginning of game
     private void assignPosition(Board board){
         int j = -3;
@@ -53,6 +62,7 @@ public class HeroTeam extends Team {
         }
     }
 
+    //choose heroes
     public void addHeroes(Board board) {
         Hero.allHeroTypes();
         Scanner input = new Scanner(System.in);

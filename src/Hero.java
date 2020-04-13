@@ -4,9 +4,9 @@ public abstract class Hero extends Characters{
     protected String name;
     protected String nickname;
     protected int level;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
-    protected int mana;
+    protected double mana;
     protected int strength;
     protected int agility;
     protected int dexterity;
@@ -41,12 +41,13 @@ public abstract class Hero extends Characters{
     public abstract void skillSet();
     public abstract void currentStats();
     public abstract void finishRound();
-    public abstract void setHP(int i);
+    public abstract void setHP(double i);
+    public abstract double getHP();
     public int getStrength() {
         return strength;
     }
     public abstract void setStrength(int i);
-    public abstract void setMana(int i);
+    public abstract void setMana(double i);
     public abstract void useMana(double i);
     public int getDexterity() {
         return dexterity;

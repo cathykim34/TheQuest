@@ -31,6 +31,7 @@ public class QuestDriver{
         md.play(m);
     }
 
+    //begins the choosing of term team
     public HeroTeam createHeroTeam(Board board){
         System.out.println("Now lets pick your team of heroes!");
         HeroTeam t = new HeroTeam();
@@ -38,6 +39,7 @@ public class QuestDriver{
         return t;
     }
 
+    //creates the monster team depending on the heroes
     public MonsterTeam createMonsterTeam(HeroTeam heroes){
         System.out.println("Meet your opponents!");
         MonsterTeam m = new MonsterTeam();
