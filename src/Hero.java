@@ -17,7 +17,14 @@ public abstract class Hero extends Characters{
     protected int row;
     protected int column;
     protected Lane lane;
+    protected Lane nexus;
 
+    public Lane getNexus() {
+        return nexus;
+    }
+    public void setNexus(Lane nexus) {
+        this.nexus = nexus;
+    }
     //just to use as menu lists
     protected static ArrayList<String> allHeroes = new ArrayList<>();
     public static void allHeroTypes(){
