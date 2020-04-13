@@ -60,7 +60,7 @@ public class Board {
                 // These columns are the 2 barrier walls between the 3 lanes, so they are type "I"
                 cellType = "I";
             }
-            BoardCell cell = new BoardCell(cellType);
+            BoardCell cell = new BoardCell(rowIndex, j, cellType);
             if (isNexusRow && rowIndex != 0) {
                 // Hero nexus must be identified as such
                 cell.setHeroNexus(true);
@@ -238,6 +238,16 @@ public class Board {
         return result;
     }
 
+    public void teleport(Hero hero, int curRow, int curCol, int newLane) {
+        BoardCell curCell = this.boardArray[curRow][curCol];
+        int curLane = curCell.getLaneNumber();
+        if (curLane != newLane) {
+            // TODO teleport there
+            Lane lane = this.lanes[newLane];
 
+        } else {
+            System.out.println("Cannot teleport to current lane");
+        }
+    }
 
 }
