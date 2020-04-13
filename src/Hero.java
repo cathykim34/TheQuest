@@ -1,5 +1,7 @@
 import java.util.*;
-public abstract class Hero extends Characters{
+
+public abstract class Hero extends Characters {
+
     protected String type = "Hero";
     protected String name;
     protected String nickname;

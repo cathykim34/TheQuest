@@ -64,62 +64,81 @@ public class BoardDriver {
             System.out.println("To move around the board, enter W to move up, A to move left, S to move down and D to move right");
             System.out.println("To quit the game, enter Q");
             System.out.println("To show information about your heroes and perform changes on weapons/armories or take a potion, enter I");
+            System.out.println("To teleport to your team's nexus, enter B");
+            System.out.println("To teleport to another lane, enter T");
             System.out.println(board);
-            System.out.println("(Tiles with a line through them are walls, so users cannot move there. Tiles with an M contain a market)");
-            for(Hero h: team.getTeam()) {
+            System.out.println("(Tiles with I's around them are walls, so users cannot move there.");
+            for(Hero hero: team.getTeam()) {
                 try {
+                    System.out.println("What would you like " + hero.getName() + " to do?");
                     String in = input.next();
                     String currentInput = in.toUpperCase();
                     if (currentInput.equals("Q")) {
                         System.out.println("Quitting game...");
                         enterQuit = true;
                     } else if (currentInput.equals("I")) {
-                        for (Hero hero : team.getTeam()) {
-                            System.out.println(hero);
-                            //                        String response = QD.giveOptions();
-                            //                        if(response.equals("P")){
-                            //                            takePotion(hero);
-                            //                        }
-                            //                        else if(response.equals("C")){
-                            //                            if(hero.changeNotPossible()){
-                            //                                System.out.println("Currently do not own any armor or weapons.");
-                            //                            }
-                            //                            else{
-                            //                                change(hero);
-                            //                            }
-                            //                        }
-                        }
+                        System.out.println(hero);
+//                        String response = QD.giveOptions();
+//                        if(response.equals("P")){
+//                            takePotion(hero);
+//                        }
+//                        else if(response.equals("C")){
+//                            if(hero.changeNotPossible()){
+//                                System.out.println("Currently do not own any armor or weapons.");
+//                            }
+//                            else{
+//                                change(hero);
+//                            }
+//                        }
+
                     } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
-                        //                    boolean possible = board.makeMove(team, currentInput);
-                        //                    String currentPlace = board.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
-                        //                    //check if current place is a common square
-                        //                    if(!possible){
-                        //                        System.out.println("Try moving somewhere else!");
-                        //                    }
-                        //                    else if(currentPlace.equals("C")){
-                        //                        QD.checkForBattle();
-                        //                    }
-                        //                    //check if current place is a market
-                        //                    else if(currentPlace.equals("M")){
-                        //                        QD.market();
-                        //                    }
+                        boolean possible = board.makeMove(hero, currentInput);
+                        if (!possible) {
+                            System.out.println("Oops! This move is not possible, please try again.");
+                        }
+                    } else if (currentInput.equals("B")) {
+                        Lane nexusLane = hero.getNexus();
+                        BoardCell[][] cells = nexusLane.getCells();
+                        BoardCell nexus = cells[cells.length-1][0];
+                        int row = nexus.getRow();
+                        int col = nexus.getCol();
+                        // Get nexus cell for the given lane
+                        BoardCell newCell = board.boardArray[row][col];
+                        if (!newCell.isFull()) {
+                            // Put hero in cell since it is not full
+                            newCell.addCharacter(hero);
+                            hero.setLane(nexusLane);
+                            hero.setRow(row);
+                            hero.setColumn(col);
+                            newCell.cellAction(hero);
+                        } else {
+                            System.out.println("Your Nexus is occupied! Cannot go there now");
+                        }
+                    } else if (currentInput.equals("T")) {
+                        System.out.println("Enter the lane number that you would like to teleport to [0-2]:");
+                        int laneNum = input.nextInt();
+                        if (laneNum > board.lanes.length-1 || laneNum < 0 ) {
+                            System.out.println("Lane does not exist");
+                        } else {
+                            board.teleport(hero, laneNum);
+                        }
                     } else {
                         System.out.println("Invalid input, please try again.");
                     }
+
                 } catch (Exception e) {
                     System.out.println("Invalid move, please try again.");
                 }
-            }
 
-            for(Monster m: monsters.getTeam()){
-                m.makeMove(board);
+                for (Monster m : monsters.getTeam()) {
+                    m.makeMove(board);
+                }
+                MonsterTeam.increaseRound();
+                if (MonsterTeam.getRounds() == 8) {
+                    nextRound(monsters, team);
+                }
+                team.roundHealthIncrease();
             }
-            MonsterTeam.increaseRound();
-            if(MonsterTeam.getRounds() == 8){
-                nextRound(monsters, team);
-            }
-            team.roundHealthIncrease();
-
         }while(!enterQuit);
         System.out.println("Thanks for playing the Quest, hope you a had a great time!");
     }
