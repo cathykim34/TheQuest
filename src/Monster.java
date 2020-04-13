@@ -23,6 +23,16 @@ public abstract class Monster extends Characters {
     public abstract void getSpellCasted(double d);
     protected static int maxLevel = 10;
 
+    public Lane getLane() {
+        return lane;
+    }
+
+    public void setLane(Lane lane) {
+        this.lane = lane;
+    }
+
+    protected Lane lane;
+
     public static int getMaxLevel(){
         return Monster.maxLevel;
     }

@@ -11,4 +11,12 @@ public class Lane {
             }
         }
     }
+
+    public int getLaneNumber() {
+        return laneNumber;
+    }
+
+    public void setLaneNumber(int laneNumber) {
+        this.laneNumber = laneNumber;
+    }
 }

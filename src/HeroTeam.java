@@ -45,9 +45,10 @@ public class HeroTeam extends Team {
     private void assignPosition(Board board){
         int j = -3;
         for(int i = 0; i<this.heroes.size(); i++) {
-            this.heroes.get(i).setLane(i);
+            this.heroes.get(i).setLane(board.lanes[i]);
             this.heroes.get(i).setRow(board.row);
             this.heroes.get(i).setColumn(j+3);
+            this.heroes.get(i).setNickname("h" + (i+1));
         }
     }
 

@@ -405,7 +405,7 @@ public class FightDriver {
     }
 
     //returns the new copy of chosen monster
-    private <T extends Monster>Monster newCopy(Monster m){
+    protected <T extends Monster>Monster newCopy(Monster m){
         String type = m.getType();
         if(type.equals("Exoskeleton")){
             return newInstanceExoskeleton(m);

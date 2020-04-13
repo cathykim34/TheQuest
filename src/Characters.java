@@ -3,7 +3,7 @@ public abstract class Characters {
     protected String name;
     protected int row;
     protected int column;
-    protected int lane;
+    protected Lane lane;
     protected String nickname;
 
     public String getNickname() {
@@ -28,11 +28,11 @@ public abstract class Characters {
         this.column = column;
     }
 
-    public int getLane() {
+    public Lane getLane() {
         return lane;
     }
 
-    public void setLane(int lane) {
+    public void setLane(Lane lane) {
         this.lane = lane;
     }
     public String getName() {
