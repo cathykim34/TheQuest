@@ -42,10 +42,19 @@ public abstract class Hero extends Characters{
     public abstract void currentStats();
     public abstract void finishRound();
     public abstract void setHP(int i);
+    public int getStrength() {
+        return strength;
+    }
     public abstract void setStrength(int i);
     public abstract void setMana(int i);
     public abstract void useMana(double i);
+    public int getDexterity() {
+        return dexterity;
+    }
     public abstract void setDexterity(int i);
+    public int getAgility() {
+        return agility;
+    }
     public abstract void setAgility(int i);
     public abstract void levelUp();
     public abstract String getName();
