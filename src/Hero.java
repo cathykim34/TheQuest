@@ -1,12 +1,14 @@
 import java.util.*;
-public abstract class Hero extends Characters{
+
+public abstract class Hero extends Characters {
+
     protected String type = "Hero";
     protected String name;
     protected String nickname;
     protected int level;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
-    protected int mana;
+    protected double mana;
     protected int strength;
     protected int agility;
     protected int dexterity;
@@ -17,7 +19,14 @@ public abstract class Hero extends Characters{
     protected int row;
     protected int column;
     protected Lane lane;
+    protected Lane nexus;
 
+    public Lane getNexus() {
+        return nexus;
+    }
+    public void setNexus(Lane nexus) {
+        this.nexus = nexus;
+    }
     //just to use as menu lists
     protected static ArrayList<String> allHeroes = new ArrayList<>();
     public static void allHeroTypes(){
@@ -34,12 +43,13 @@ public abstract class Hero extends Characters{
     public abstract void skillSet();
     public abstract void currentStats();
     public abstract void finishRound();
-    public abstract void setHP(int i);
+    public abstract void setHP(double i);
+    public abstract double getHP();
     public int getStrength() {
         return strength;
     }
     public abstract void setStrength(int i);
-    public abstract void setMana(int i);
+    public abstract void setMana(double i);
     public abstract void useMana(double i);
     public int getDexterity() {
         return dexterity;

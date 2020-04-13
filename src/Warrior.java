@@ -3,7 +3,7 @@ public class Warrior extends Hero implements Fight{
     protected String type = "Warrior";
     protected String name;
     protected int experience;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
     protected double mana;
     protected double strength;
@@ -129,6 +129,7 @@ public class Warrior extends Hero implements Fight{
     }
 
 
+
     //checking if armor is on
     public boolean armorOn(){
         return !(this.armor == null);
@@ -237,8 +238,13 @@ public class Warrior extends Hero implements Fight{
         this.mana += (this.mana*0.05);
     }
     @Override
-    public void setHP(int i){
+    public void setHP(double i){
         this.HP += i;
+    }
+
+    @Override
+    public double getHP() {
+        return this.HP;
     }
 
     @Override
@@ -247,9 +253,10 @@ public class Warrior extends Hero implements Fight{
     }
 
     @Override
-    public void setMana(int i) {
+    public void setMana(double i) {
         this.mana += i;
     }
+
     @Override
     public void useMana(double i) {
         this.mana -= i;

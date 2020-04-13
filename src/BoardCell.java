@@ -52,7 +52,7 @@ public class BoardCell {
     }
 
     public Characters[] getContents() {
-        return contents;
+        return this.contents;
     }
 
     public void setContents(Characters[] contents) {
@@ -61,34 +61,47 @@ public class BoardCell {
     public int getCapacity() {
         return capacity;
     }
-
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    //take out a character from cell
     public void removeCharacter(Characters character) {
-        for (int i = 0; i < contents.length; i++) {
-            if (contents[i].name.equals(character.name)) {
-                contents[i] = null;
+        for (int i = 0; i < this.contents.length; i++) {
+            if (this.contents[i].name.equals(character.name)) {
+                this.contents[i] = null;
             }
         }
     }
 
+    //move a character into this cell
     public void addCharacter(Characters character) {
-        for (int i = 0; i < contents.length; i++) {
-            if (contents[i] == null) {
-                contents[i] = character;
+        for (int i = 0; i < this.contents.length; i++) {
+            if (this.contents[i] == null) {
+                this.contents[i] = character;
             }
         }
     }
 
+    //checks if cell is full
     public boolean isFull() {
-        for (int i = 0; i < contents.length; i++) {
-            if (contents[i] == null) {
+        for (int i = 0; i < this.contents.length; i++) {
+            if (this.contents[i] == null) {
                 return false;
             }
         }
         return true;
 
+    }
+
+    //checks if cell is empty
+    public boolean isEmpty(){
+        for(int i = 0; i < this.capacity; i++){
+            if(this.contents[i] != null){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void cellAction(Hero hero) {

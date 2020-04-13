@@ -5,9 +5,18 @@ public abstract class Characters {
     protected int column;
     protected Lane lane;
     protected String nickname;
+    protected Lane nexus;
 
     public String getNickname() {
         return nickname;
+    }
+
+    public Lane getNexus() {
+        return nexus;
+    }
+
+    public void setNexus(Lane nexus) {
+        this.nexus = nexus;
     }
     public void setNickname(String nickname) {
         this.nickname = nickname;

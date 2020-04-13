@@ -61,6 +61,7 @@ public class Board {
                 cellType = "I";
             }
             BoardCell cell = new BoardCell(rowIndex, j, cellType);
+
             if (isNexusRow && rowIndex != 0) {
                 // Hero nexus must be identified as such
                 cell.setHeroNexus(true);
@@ -88,10 +89,13 @@ public class Board {
         return(b.getType().equals("I"));
     }
 
-    // CHeck if there is a fight to take place
+    //Check if there is a fight to take place
     public boolean isFight() {
         return false;
     }
+
+    //Check cells around you
+    public boolean enemyNear(Character character)
 
 
     //check if chosen movement exists on board

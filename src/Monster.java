@@ -21,6 +21,14 @@ public abstract class Monster extends Characters {
     public abstract void setDodge_chance(double d);
     public abstract void setDefense(double d);
     public abstract void getSpellCasted(double d);
+    protected Lane nexus;
+
+    public Lane getNexus() {
+        return nexus;
+    }
+    public void setNexus(Lane nexus) {
+        this.nexus = nexus;
+    }
     protected static int maxLevel = 10;
 
     public Lane getLane() {
@@ -45,6 +53,17 @@ public abstract class Monster extends Characters {
         huge.addAll(Spirit.existingTypes());
         return huge;
     }
+
+    //check if there are heroes in range to fight
+    public boolean needToAttack(Board board){
+        if()
+    }
+
+    //either move forward or fight
+    public void makeMove(Board board){
+
+    }
+
 
     public Monster(){}
 

@@ -4,7 +4,7 @@ public class Sorcerer extends Hero implements Fight{
     protected String type = "Sorcerer";
     protected String name;
     protected int experience;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
     protected double mana;
     protected double strength;
@@ -93,8 +93,13 @@ public class Sorcerer extends Hero implements Fight{
         this.mana += (this.mana*0.05);
     }
     @Override
-    public void setHP(int i){
+    public void setHP(double i){
         this.HP += i;
+    }
+
+    @Override
+    public double getHP() {
+        return this.HP;
     }
 
     @Override
@@ -103,7 +108,7 @@ public class Sorcerer extends Hero implements Fight{
     }
 
     @Override
-    public void setMana(int i) {
+    public void setMana(double i) {
         this.mana += i;
     }
 
