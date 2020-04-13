@@ -95,7 +95,9 @@ public class Board {
     }
 
     //Check cells around you
-    public boolean enemyNear(Character character)
+    public boolean enemyNear(Character character) {
+        return false;
+    }
 
 
     //check if chosen movement exists on board
@@ -117,6 +119,7 @@ public class Board {
                     oldCell.removeCharacter(hero);
                     newCell.addCharacter(hero);
                     hero.setRow(tempRow);
+                    newCell.cellAction(hero);
                     spotOpen = true;
                 } else {
                     System.out.println("Oops! This cell is at max capacity.");
@@ -135,6 +138,7 @@ public class Board {
                     oldCell.removeCharacter(hero);
                     newCell.addCharacter(hero);
                     hero.setColumn(tempCol);
+                    newCell.cellAction(hero);
                     spotOpen = true;
                 } else {
                     System.out.println("Oops! This cell is at max capacity.");
@@ -154,6 +158,7 @@ public class Board {
                     oldCell.removeCharacter(hero);
                     newCell.addCharacter(hero);
                     hero.setRow(tempRow);
+                    newCell.cellAction(hero);
                     spotOpen = true;
                 } else {
                     System.out.println("Oops! This cell is at max capacity.");
@@ -172,6 +177,7 @@ public class Board {
                     oldCell.removeCharacter(hero);
                     newCell.addCharacter(hero);
                     hero.setColumn(tempCol);
+                    newCell.cellAction(hero);
                     spotOpen = true;
                 } else {
                     System.out.println("Oops! This cell is at max capacity.");
@@ -258,18 +264,21 @@ public class Board {
     }
 
     private boolean teleportToHero(Lane lane, Hero hero) {
+        // We can only teleport to a fellow hero
         BoardCell[][] cells = lane.getCells();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 BoardCell cell = cells[i][j];
                 Characters[] contents = cell.getContents();
                 for (Characters c:contents){
+                    // Find the hero in the destination lane
                     if (c.nickname.indexOf("H") != -1) {
                         // The nickname contains H, so it is a fellow hero
                         if(!cell.isFull()){
                             // We move the character to the new cell
                             cell.addCharacter(hero);
                             hero.setLane(lane);
+                            cell.cellAction(hero);
                             return true;
                         }
                     }

@@ -1,8 +1,28 @@
+import java.util.Scanner;
+
 public class BoardCell {
     private String type;
     private int capacity; // How many players can be in a cell at a given time
     private Characters[] contents; // Characters in the cell
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
     private int row;
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
     private int col;
 
     public boolean getIsHeroNexus() {
@@ -123,7 +143,10 @@ public class BoardCell {
         } else if (this.type.equals("N")) {
             // Nexus cells
             if (!isHeroNexus) {
-                // TODO: game won action
+                System.out.println(hero.getName() + " has entered the enemy nexus!");
+                System.out.println("Heroes win!");
+                System.out.println("Thank you for playing!");
+                System.exit(0);
             } else {
                 nexusCellAction(hero);
             }
@@ -132,10 +155,17 @@ public class BoardCell {
 
     public void nexusCellAction(Hero hero) {
         hero.revive();
+        System.out.println(hero.getName() + "'s health is restored!");
 
-        Market market = new Market();
-        MarketDriver driver = new MarketDriver();
-        driver.play(market);
+        Scanner input = new Scanner(System.in);
+        System.out.println("Would you like to visit the market? [y/n]: ");
+        String choice = input.next();
+        choice = choice.toUpperCase();
+        if (choice.equals("y")) {
+            Market market = new Market();
+            MarketDriver driver = new MarketDriver();
+            driver.play(market);
+        }
     }
 
 }

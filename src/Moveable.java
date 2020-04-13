@@ -1,3 +1,4 @@
 public interface Moveable {
-    void makeMake(Board board);
+    void makeMove(Board board);
+    boolean enemyNear();
 }
