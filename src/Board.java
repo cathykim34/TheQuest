@@ -238,16 +238,41 @@ public class Board {
         return result;
     }
 
-    public void teleport(Hero hero, int curRow, int curCol, int newLane) {
-        BoardCell curCell = this.boardArray[curRow][curCol];
-        int curLane = curCell.getLaneNumber();
+    public void teleport(Hero hero, int newLane) {
+        int curLane = hero.getLane().getLaneNumber();
         if (curLane != newLane) {
-            // TODO teleport there
             Lane lane = this.lanes[newLane];
-
+            boolean success = teleportToHero(lane, hero);
+            if (success){
+                System.out.println("You have teleported!");
+            } else{
+                System.out.println("Cannot teleport to fellow hero; space full");
+            }
         } else {
             System.out.println("Cannot teleport to current lane");
         }
+    }
+
+    private boolean teleportToHero(Lane lane, Hero hero) {
+        BoardCell[][] cells = lane.getCells();
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                BoardCell cell = cells[i][j];
+                Characters[] contents = cell.getContents();
+                for (Characters c:contents){
+                    if (c.nickname.indexOf("H") != -1) {
+                        // The nickname contains H, so it is a fellow hero
+                        if(!cell.isFull()){
+                            // We move the character to the new cell
+                            cell.addCharacter(hero);
+                            hero.setLane(lane);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
