@@ -66,50 +66,49 @@ public class BoardDriver {
             System.out.println("To show information about your heroes and perform changes on weapons/armories or take a potion, enter I");
             System.out.println(board);
             System.out.println("(Tiles with a line through them are walls, so users cannot move there. Tiles with an M contain a market)");
-            try{
-                String in = input.next();
-                String currentInput = in.toUpperCase();
-                if(currentInput.equals("Q")){
-                    System.out.println("Quitting game...");
-                    enterQuit = true;
-                }
-                else if(currentInput.equals("I")){
-                    for(Hero hero: team.getTeam()){
-                        System.out.println(hero);
-//                        String response = QD.giveOptions();
-//                        if(response.equals("P")){
-//                            takePotion(hero);
-//                        }
-//                        else if(response.equals("C")){
-//                            if(hero.changeNotPossible()){
-//                                System.out.println("Currently do not own any armor or weapons.");
-//                            }
-//                            else{
-//                                change(hero);
-//                            }
-//                        }
+            for(Hero h: team.getTeam()) {
+                try {
+                    String in = input.next();
+                    String currentInput = in.toUpperCase();
+                    if (currentInput.equals("Q")) {
+                        System.out.println("Quitting game...");
+                        enterQuit = true;
+                    } else if (currentInput.equals("I")) {
+                        for (Hero hero : team.getTeam()) {
+                            System.out.println(hero);
+                            //                        String response = QD.giveOptions();
+                            //                        if(response.equals("P")){
+                            //                            takePotion(hero);
+                            //                        }
+                            //                        else if(response.equals("C")){
+                            //                            if(hero.changeNotPossible()){
+                            //                                System.out.println("Currently do not own any armor or weapons.");
+                            //                            }
+                            //                            else{
+                            //                                change(hero);
+                            //                            }
+                            //                        }
+                        }
+                    } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
+                        //                    boolean possible = board.makeMove(team, currentInput);
+                        //                    String currentPlace = board.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
+                        //                    //check if current place is a common square
+                        //                    if(!possible){
+                        //                        System.out.println("Try moving somewhere else!");
+                        //                    }
+                        //                    else if(currentPlace.equals("C")){
+                        //                        QD.checkForBattle();
+                        //                    }
+                        //                    //check if current place is a market
+                        //                    else if(currentPlace.equals("M")){
+                        //                        QD.market();
+                        //                    }
+                    } else {
+                        System.out.println("Invalid input, please try again.");
                     }
+                } catch (Exception e) {
+                    System.out.println("Invalid move, please try again.");
                 }
-                else if(currentInput.equals("W")||currentInput.equals("A") || currentInput.equals("S")|| currentInput.equals("D")){
-//                    boolean possible = board.makeMove(team, currentInput);
-//                    String currentPlace = board.boardArray[Team.getCurRow()][Team.getCurCol()].getType();
-//                    //check if current place is a common square
-//                    if(!possible){
-//                        System.out.println("Try moving somewhere else!");
-//                    }
-//                    else if(currentPlace.equals("C")){
-//                        QD.checkForBattle();
-//                    }
-//                    //check if current place is a market
-//                    else if(currentPlace.equals("M")){
-//                        QD.market();
-//                    }
-                }
-                else{
-                    System.out.println("Invalid input, please try again.");
-                }
-            }catch(Exception e){
-                System.out.println("Invalid move, please try again.");
             }
 
             for(Monster m: monsters.getTeam()){

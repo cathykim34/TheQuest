@@ -24,6 +24,7 @@ public abstract class Characters {
     public int getRow() {
         return row;
     }
+    public abstract boolean checkFainted();
 
     public void setRow(int row) {
         this.row = row;
