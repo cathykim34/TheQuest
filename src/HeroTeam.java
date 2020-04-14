@@ -56,7 +56,7 @@ public class HeroTeam extends Team {
         for(int i = 0; i<this.heroes.size(); i++) {
             this.heroes.get(i).setLane(board.lanes[i]);
             this.heroes.get(i).setNexus(board.lanes[i]);
-            this.heroes.get(i).setRow(board.row);
+            this.heroes.get(i).setRow(board.row-1);
             this.heroes.get(i).setColumn(j+3);
             this.heroes.get(i).setNickname("h" + (i+1));
         }

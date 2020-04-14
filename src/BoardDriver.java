@@ -37,6 +37,7 @@ public class BoardDriver {
             //each hero gets a turn
             for(Hero hero: team.getTeam()) {
                 boolean makeMove = true;
+                board.boardArray[hero.getRow()][hero.getColumn()].cellAction(hero);
                 do {
                     try {
                         System.out.println("What would you like " + hero.getName() + " to do?");
