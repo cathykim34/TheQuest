@@ -78,10 +78,65 @@ public class Board {
     }
 
 
-    //check if input is a valid movement
-    public boolean validInput(String s){
-        return(s.equals("W")||s.equals("D")|| s.equals("A")|| s.equals("S")|| s.equals("I") || s.equals("Q"));
+    public String toString(){
+        String result = "";
+
+        for (int i = 0; i < this.row; i++) {
+            printRow(i);
+        }
+
+        return result;
     }
+
+
+    private String printRow(int rowIndex) {
+        String result = "";
+
+        // For each of the 4 lines to be printed out for each cell, where i is each line
+        // 4 is hardcoded here because no matter how big the board, each cell will only
+        // ever get printed out with a cell height of 4 lines
+        for (int i = 0; i < 4; i++) {
+            // For each column, j
+            for (int j = 0; j < this.column; j++) {
+                BoardCell cell = boardArray[rowIndex][j];
+                if (i == 0 || i == 2) {
+                    // The lines to be printed that designate the type of cell
+                    cell.getType();
+                    String cellBorder = cell.getCellBorder();
+                    result += cellBorder;
+                } else if (i == 1) {
+                    String[] cellNicknames = this.cellNicknames(cell);
+                    // The side borders of a cell
+                    result += " | " + cellNicknames[0] + " " + cellNicknames[1] + " | ";
+                } else {
+                    // Blank area underneath cells
+                    result += "           ";
+                }
+                result += "\n";
+            }
+        }
+
+        return result;
+    }
+
+
+    private String[] cellNicknames(BoardCell cell) {
+        Characters[] cellContents = cell.getContents();
+        String[] result = new String[cellContents.length];
+        for (int i = 0; i < cellContents.length; i++) {
+            if (cellContents[i] != null) {
+                // If there's a character in this cell, we want its nickname to display
+                result[i] = cellContents[i].nickname;
+            } else {
+                // No character means nothing to display
+                result[i] = "  ";
+            }
+        }
+
+        return result;
+    }
+
+
 
     //check if chosen movement hits a wall
     public boolean wallExists(int col, int row){
@@ -190,64 +245,6 @@ public class Board {
         return spotOpen;
     }
 
-    public String toString(){
-        String result = "";
-
-        for (int i = 0; i < this.row; i++) {
-            printRow(i);
-        }
-
-        return result;
-    }
-
-
-    private String printRow(int rowIndex) {
-        String result = "";
-
-        // For each of the 4 lines to be printed out for each cell, where i is each line
-        // 4 is hardcoded here because no matter how big the board, each cell will only
-        // ever get printed out with a cell height of 4 lines
-        for (int i = 0; i < 4; i++) {
-            // For each column, j
-            for (int j = 0; j < this.column; j++) {
-                BoardCell cell = boardArray[rowIndex][j];
-                if (i == 0 || i == 2) {
-                    // The lines to be printed that designate the type of cell
-                    cell.getType();
-                    String cellBorder = cell.getCellBorder();
-                    result += cellBorder;
-                } else if (i == 1) {
-                    String[] cellNicknames = this.cellNicknames(cell);
-                    // The side borders of a cell
-                    result += " | " + cellNicknames[0] + " " + cellNicknames[1] + " | ";
-                } else {
-                    // Blank area underneath cells
-                    result += "           ";
-                }
-                result += "\n";
-            }
-        }
-
-        return result;
-    }
-
-
-    private String[] cellNicknames(BoardCell cell) {
-        Characters[] cellContents = cell.getContents();
-        String[] result = new String[cellContents.length];
-        for (int i = 0; i < cellContents.length; i++) {
-            if (cellContents[i] != null) {
-                // If there's a character in this cell, we want its nickname to display
-                result[i] = cellContents[i].nickname;
-            } else {
-                // No character means nothing to display
-                result[i] = "  ";
-            }
-        }
-
-        return result;
-    }
-
     public void teleport(Hero hero, int newLane) {
         int curLane = hero.getLane().getLaneNumber();
         if (curLane != newLane) {
@@ -286,6 +283,26 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public void teleportToNexus(Hero hero) {
+        Lane nexusLane = hero.getNexus();
+        BoardCell[][] cells = nexusLane.getCells();
+        BoardCell nexus = cells[cells.length-1][0];
+        int row = nexus.getRow();
+        int col = nexus.getCol();
+        // Get nexus cell for the given lane
+        BoardCell newCell = this.boardArray[row][col];
+        if (!newCell.isFull()) {
+            // Put hero in cell since it is not full
+            newCell.addCharacter(hero);
+            hero.setLane(nexusLane);
+            hero.setRow(row);
+            hero.setColumn(col);
+            newCell.cellAction(hero);
+        } else {
+            System.out.println("Your Nexus is occupied! Cannot go there now");
+        }
     }
 
 }

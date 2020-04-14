@@ -114,6 +114,16 @@ public class BoardCell {
 
     }
 
+    //checks if cell has a hero in it already
+    public boolean containsHero() {
+        for (int i = 0; i < this.contents.length; i++) {
+            if (this.contents[i] == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //checks if cell is empty
     public boolean isEmpty(){
         for(int i = 0; i < this.capacity; i++){

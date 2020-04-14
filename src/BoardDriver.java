@@ -52,6 +52,7 @@ public class BoardDriver {
         }while(keepChanging);
     }
 
+
     //enter board game to start playing
     public void enterTheWorld(HeroTeam team, Board board, QuestDriver QD){
 
@@ -73,47 +74,35 @@ public class BoardDriver {
                     System.out.println("What would you like " + hero.getName() + " to do?");
                     String in = input.next();
                     String currentInput = in.toUpperCase();
+                    if (currentInput.equals("I")) {
+                        System.out.println(hero);
+                        String response = QD.giveOptions();
+                        if(response.equals("P")){
+                            takePotion(hero);
+                        }
+                        else if(response.equals("C")){
+                            if(hero.changeNotPossible()){
+                                System.out.println("Currently do not own any armor or weapons.");
+                            }
+                            else{
+                                change(hero);
+                            }
+                        }
+                        System.out.println("What would you like " + hero.getName() + " to do next?");
+                        String in2 = input.next();
+                        currentInput = in2.toUpperCase();
+                    }
                     if (currentInput.equals("Q")) {
                         System.out.println("Quitting game...");
                         enterQuit = true;
-                    } else if (currentInput.equals("I")) {
-                        System.out.println(hero);
-//                        String response = QD.giveOptions();
-//                        if(response.equals("P")){
-//                            takePotion(hero);
-//                        }
-//                        else if(response.equals("C")){
-//                            if(hero.changeNotPossible()){
-//                                System.out.println("Currently do not own any armor or weapons.");
-//                            }
-//                            else{
-//                                change(hero);
-//                            }
-//                        }
-
                     } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
                         boolean possible = board.makeMove(hero, currentInput);
                         if (!possible) {
                             System.out.println("Oops! This move is not possible, please try again.");
                         }
                     } else if (currentInput.equals("B")) {
-                        Lane nexusLane = hero.getNexus();
-                        BoardCell[][] cells = nexusLane.getCells();
-                        BoardCell nexus = cells[cells.length-1][0];
-                        int row = nexus.getRow();
-                        int col = nexus.getCol();
-                        // Get nexus cell for the given lane
-                        BoardCell newCell = board.boardArray[row][col];
-                        if (!newCell.isFull()) {
-                            // Put hero in cell since it is not full
-                            newCell.addCharacter(hero);
-                            hero.setLane(nexusLane);
-                            hero.setRow(row);
-                            hero.setColumn(col);
-                            newCell.cellAction(hero);
-                        } else {
-                            System.out.println("Your Nexus is occupied! Cannot go there now");
-                        }
+                        // Teleport to own nexus
+                        board.teleportToNexus(hero);
                     } else if (currentInput.equals("T")) {
                         System.out.println("Enter the lane number that you would like to teleport to [0-2]:");
                         int laneNum = input.nextInt();
@@ -149,4 +138,6 @@ public class BoardDriver {
         MonsterTeam.setRounds(1);
         monsters.addMonsters(team);
     }
+
+
 }
