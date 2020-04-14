@@ -58,11 +58,11 @@ public class QuestDriver{
         return(ran <= battle_chance);
     }
 
-    //if randomly appears, begin fight sequence
-    public void checkForBattle(){
+    //if randomly appears, begin fight sequences
+    public void checkForBattle(Board board){
         if(battleAppeared()){
             FightDriver FD = new FightDriver();
-            FD.play();
+            FD.play(board);
         }
     }
 

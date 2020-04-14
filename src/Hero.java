@@ -445,6 +445,11 @@ public abstract class Hero extends Characters{
         return Hero.allHeroes;
     }
 
+    public void respawn(Board board) {
+        // This function also takes care of the cell's action,
+        // which is reviving and opening the market
+        board.teleportToNexus(this);
+    }
 
 
 
