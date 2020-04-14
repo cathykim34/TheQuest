@@ -8,6 +8,8 @@ public abstract class Characters {
     protected String nickname;
     protected Lane nexus;
 
+    protected double damage;
+
     //checks if there is a monster or hero in front of a character
     public abstract boolean enemyNear(Board board);
 
@@ -55,5 +57,13 @@ public abstract class Characters {
     public void setName(String name) {
         this.name = name;
     }
-    public abstract void getAttacked(Monster m);
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+    public abstract void getAttackedByMonster(Monster m, Board board);
+    public abstract void getAttackedByHero(Hero h, Board board);
 }

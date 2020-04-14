@@ -7,18 +7,16 @@ public abstract class Monster extends Characters{
     protected double defense;
     protected double dodge_chance;
     protected double HP;
-    protected double dead;
+    protected boolean dead;
     protected boolean reachedNexus = false;
     public abstract void currentStats();
     public static ArrayList<Monster> all;
-    public abstract boolean checkDeath();
     public abstract String getType();
     public abstract int getLevel();
     public abstract double getDamage();
     public abstract double getDefense();
     public abstract double getDodge_chance();
     public abstract String getName();
-    public abstract void getAttacked(double d);
     public abstract void setDamage(double d);
     public abstract void setDodge_chance(double d);
     public abstract void setDefense(double d);
@@ -36,6 +34,16 @@ public abstract class Monster extends Characters{
         huge.addAll(Spirit.existingTypes());
         return huge;
     }
+    //check if monster has been defeated
+    public boolean checkFainted(){
+        if (this.HP <= 0){
+            this.dead = true;
+            System.out.println("Monster defeated!!");
+            return true;
+        }
+        return false;
+    }
+
 
     //either move forward or fight
     public void makeMove(Board board){
@@ -61,36 +69,36 @@ public abstract class Monster extends Characters{
     public boolean enemyNear(Board board){
         if(board.boardArray[this.row-1][this.column].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         //if monster is in your cell
         else if(board.boardArray[this.row][this.column].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         //if monster is diagonally in front
         else if(board.boardArray[this.row-1][this.column+1].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         else if(board.boardArray[this.row-1][this.column-1].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         //if monster is next to you
         else if(board.boardArray[this.row][this.column+1].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         //if monster is next to you
         else if(board.boardArray[this.row][this.column-1].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
         return false;
@@ -113,6 +121,39 @@ public abstract class Monster extends Characters{
     }
     public boolean isReachedNexus() {
         return reachedNexus;
+    }
+
+    //checks chance of dodging attacks
+    public boolean attackDodged(){
+        double ran = Math.random();
+        return(ran <= this.dodge_chance);
+    }
+
+    //receives damage from hero
+    public void getAttackedByHero(Hero h, Board board) {
+        if(attackDodged()){
+            System.out.println("Attack dodged! No damage received.");
+        }
+
+        else{
+            double damage = h.getHeroDamage();
+            if(this.defense > damage){
+                System.out.println("No damage due to " + this.name + "'s defense");
+            }
+            else{
+                this.HP -= (this.defense - damage);
+                updateIsDead(board);
+            }
+        }
+    }
+
+    public void getAttackedByMonster(Monster m, Board board){}
+
+    //checks if monster is dead and appropriately cleans up
+    public void updateIsDead(Board board) {
+        if(this.HP <= 0){
+            board.boardArray[this.row][this.column].removeCharacter(this);
+        }
     }
 
     public Monster(){}

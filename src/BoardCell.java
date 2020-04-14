@@ -146,6 +146,18 @@ public class BoardCell {
         return null;
     }
 
+    //return hero
+    public Characters getMonster(){
+        for(int i = 0; i<this.contents.length; i++){
+            if(this.contents[i] != null){
+                if(this.contents[i].getType().equals("Monster")){
+                    return this.contents[i];
+                }
+            }
+        }
+        return null;
+    }
+
     //checks if there is a monster in the cell
     public boolean monsterExists(){
         boolean doesExist = false;
@@ -220,9 +232,11 @@ public class BoardCell {
         String choice = input.next();
         choice = choice.toUpperCase();
         if (choice.equals("y")) {
+            Weaponry.existingTypes();
+            Armory.existingTypes();
             Market market = new Market();
             MarketDriver driver = new MarketDriver();
-            driver.play(market);
+            driver.play(market, hero);
         }
     }
 

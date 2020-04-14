@@ -20,6 +20,7 @@ public abstract class Hero extends Characters{
     protected int column;
     protected Lane lane;
     protected Lane nexus;
+    protected double probDodge;
 
     public Lane getNexus() {
         return nexus;
@@ -65,12 +66,10 @@ public abstract class Hero extends Characters{
     public abstract double getMana();
     public abstract int getLevel();
     public abstract boolean armorOn();
-    public abstract boolean handsUsed();
     public abstract void equip(Armory a);
     public abstract void unequip(Armory a);
     public abstract void equip(Weaponry a);
     public abstract void unequip(Weaponry a);
-    public abstract void getAttacked(Monster m);
     public abstract boolean checkFainted();
     public abstract String getBackpack();
     public abstract void addXP(int i);
@@ -191,6 +190,31 @@ public abstract class Hero extends Characters{
         return spotOpen;
     }
 
+    public boolean attackDodged() {
+        double ran = Math.random();
+        return(ran <= this.probDodge);
+    }
+
+    public void getAttacked(Monster m) {
+        if(attackDodged()){
+            System.out.println("Attack Dodged!");
+        }
+        else{
+            if(armorOn()){
+                if(this.armor.getDamage_reduction() >= m.getDamage()){
+                    System.out.println("No damage thanks to armor!");
+                }
+                else{
+                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
+                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
+                }
+            }else {
+                this.HP -= m.getDamage();
+                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
+            }
+        }
+    }
+
     //carries out potions
     public void usePotion(){
         Scanner input = new Scanner(System.in);
@@ -219,6 +243,11 @@ public abstract class Hero extends Characters{
             }
 
         }while(invalidInput);
+    }
+
+    //checking if armor is on
+    public boolean handsUsed(){
+        return !(this.weapon == null);
     }
 
     //changing either armory or weapon
@@ -393,6 +422,7 @@ public abstract class Hero extends Characters{
 
     }
 
+
     //helper function to getAttacked for dodge probability
     protected boolean attackDodged(Monster m){
         double ran = Math.random();
@@ -406,6 +436,39 @@ public abstract class Hero extends Characters{
             return false;
         }
         return true;
+    }
+    public double getHeroDamage(){
+        if(handsUsed()){
+            return this.strength+this.weapon.getDamage()*0.05;
+        }
+        return this.strength*0.05;
+    }
+
+    public void attack(Monster monster, Board board){
+        monster.getAttackedByHero(this, board);
+    }
+
+    public void getAttackedByHero(Hero h, Board board){}
+
+    //how much damage to get from an attack
+    public void getAttackedByMonster(Monster m, Board board) {
+        if(attackDodged()){
+            System.out.println("Attack Dodged!");
+        }
+        else{
+            if(armorOn()){
+                if(this.armor.getDamage_reduction() >= m.getDamage()){
+                    System.out.println("No damage thanks to armor!");
+                }
+                else{
+                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
+                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
+                }
+            }else {
+                this.HP -= m.getDamage();
+                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
+            }
+        }
     }
 
 

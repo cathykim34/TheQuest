@@ -58,11 +58,6 @@ public class Exoskeleton extends Monster {
         return this.name;
     }
 
-    //helper function to getAttacked for dodge probability
-    private boolean attackDodged(){
-        double ran = Math.random();
-        return(ran <= this.dodge_chance);
-    }
 
     //check if monster has been defeated
     public boolean checkDeath(){
@@ -91,23 +86,6 @@ public class Exoskeleton extends Monster {
     @Override
     public void getSpellCasted(double d){
         this.damage -= d;
-    }
-
-
-    @Override
-    public void getAttacked(double d) {
-        if(attackDodged()){
-            System.out.println("Attack dodged! No damage received.");
-        }
-        else{
-            if(this.defense > d){
-                System.out.println("No damage due to " + this.name + "'s defense");
-            }
-            else{
-                this.HP -= (this.defense - d);
-                checkDeath();
-            }
-        }
     }
 
     public String toString(){

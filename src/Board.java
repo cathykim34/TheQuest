@@ -36,8 +36,8 @@ public class Board {
         BoardCell[][] result = new BoardCell[endRow-startRow+1][endCol-startCol+1];
         int curRow = 0;
         int curCol = 0;
-        for (int i = startRow; i <= endRow; i++) {
-            for (int j = startCol; j <= endCol; j++) {
+        for (int i = startRow; i < endRow; i++) {
+            for (int j = startCol; j < endCol; j++) {
                 result[curRow][curCol] = this.boardArray[i][j];
                 curCol++;
             }
