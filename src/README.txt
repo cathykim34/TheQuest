@@ -2,6 +2,7 @@ Group #20
 Sarah Rieger (U47427637)
 Catherine Kim (U51788489)
 
+"NOTE THAT MONSTERS CANNOT WIN UNLESS A HERO TELEPORTS"
 
 Compilation Instructions:
 javac GameDriver.java

@@ -44,7 +44,6 @@ public class BoardDriver {
                         System.out.println("What would you like " + hero.getName() + " to do?");
                         String in = input.next();
                         String currentInput = in.toUpperCase();
-                        System.out.println(currentInput);
                         if (currentInput.equals("Q")) {
                             System.out.println("Quitting game...");
                             makeMove= false;

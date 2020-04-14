@@ -221,9 +221,13 @@ public class Board {
         BoardCell nexus = cells[cells.length-1][0];
         int row = nexus.getRow();
         int col = nexus.getCol();
+        int oldRow = hero.getRow();
+        int oldCol = hero.getColumn();
         // Get nexus cell for the given lane
+        BoardCell oldCell = this.boardArray[oldRow][oldCol];
         BoardCell newCell = this.boardArray[row][col];
         if (!newCell.isFull() && !newCell.heroExists()) {
+            oldCell.removeCharacter(hero);
             // Put hero in cell since it is not full
             newCell.addCharacter(hero);
             hero.setLane(nexusLane);

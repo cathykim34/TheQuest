@@ -4,26 +4,17 @@ public class BoardCell {
     protected String type;
     protected int capacity; // How many players can be in a cell at a given time
     protected Characters[] contents; // Characters in the cell
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     private int row;
+    private int col;
 
     public int getCol() {
         return col;
     }
-
-    public void setCol(int col) {
-        this.col = col;
+    public int getRow() {
+        return row;
     }
 
-    private int col;
+
 
     public boolean getIsHeroNexus() {
         return isHeroNexus;
@@ -75,14 +66,8 @@ public class BoardCell {
         return this.contents;
     }
 
-    public void setContents(Characters[] contents) {
-        this.contents = contents;
-    }
     public int getCapacity() {
         return capacity;
-    }
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     //take out a character from cell
