@@ -51,10 +51,8 @@ public class Board {
 
 
     private void makeRow(int rowIndex, boolean isNexusRow) {
-        String result = "";
-        String cellType = "N";
-
         for (int j = 0; j < this.column; j++) {
+            String cellType = "N";
             if (!isNexusRow) {
                 // If not a nexus row, we can pick a random cell type
                 cellType = pickRandomCellType();
@@ -117,8 +115,8 @@ public class Board {
                     // Blank area underneath cells
                     result += "           ";
                 }
-                result += "\n";
             }
+            result += "\n";
         }
 
         return result;
