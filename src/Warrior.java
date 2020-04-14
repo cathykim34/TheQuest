@@ -1,5 +1,5 @@
 import java.util.*;
-public class Warrior extends Hero implements Fight{
+public class Warrior extends Hero{
     protected String type = "Warrior";
     protected String name;
     protected int experience;
@@ -197,7 +197,6 @@ public class Warrior extends Hero implements Fight{
         return this.level;
     }
 
-    @Override
     public boolean attackDodged() {
         double ran = Math.random();
         return(ran <= this.probDodge);
@@ -282,15 +281,6 @@ public class Warrior extends Hero implements Fight{
         levelUp();
     }
 
-    @Override
-    public void makeMove(Monster m) {
-        if(handsUsed()){
-            m.getAttacked((this.strength+this.weapon.getDamage())*0.05);
-        }
-        else{
-            m.getAttacked(this.strength*0.05);
-        }
-    }
     //prints description of item
     public String toString(){
         String ret = "";

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Sorcerer extends Hero implements Fight{
+public class Sorcerer extends Hero{
     protected String type = "Sorcerer";
     protected String name;
     protected int experience;
@@ -36,7 +36,6 @@ public class Sorcerer extends Hero implements Fight{
         this.backpack = new Backpack();
     }
 
-    @Override
     public boolean attackDodged() {
         double ran = Math.random();
         return(ran <= this.probDodge);
@@ -132,16 +131,6 @@ public class Sorcerer extends Hero implements Fight{
         return this.name;
     }
 
-
-    @Override
-    public void makeMove(Monster m) {
-        if(handsUsed()){
-            m.getAttacked((this.strength+this.weapon.getDamage())*0.05);
-        }
-        else{
-            m.getAttacked(this.strength*0.05);
-        }
-    }
 
     //returns hero type
     public String getType(){

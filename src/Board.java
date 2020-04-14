@@ -144,106 +144,11 @@ public class Board {
         return(b.getType().equals("I"));
     }
 
-    //Check if there is a fight to take place
-    public boolean isFight() {
-        return false;
-    }
-
-    //Check cells around you
-    public boolean enemyNear(Character character) {
-        return false;
-    }
-
-
     //check if chosen movement exists on board
     public boolean boardEdge(int col, int row){
         return(col >= this.column && row >= this.row);
     }
-
-    //returns whether that move is possible or not
-    public boolean makeMove(Hero hero, String move) {
-        boolean spotOpen = false;
-        int tempCol = hero.getColumn();
-        int tempRow = hero.getRow();
-        if(move.equals("W")){
-            tempRow--;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setRow(tempRow);
-                    newCell.cellAction(hero);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        else if(move.equals("A")){
-            tempCol--;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setColumn(tempCol);
-                    newCell.cellAction(hero);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-
-        }
-        else if(move.equals("S")){
-            tempRow++;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setRow(tempRow);
-                    newCell.cellAction(hero);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        else if (move.equals("D")){
-            tempCol++;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setColumn(tempCol);
-                    newCell.cellAction(hero);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-
-            }else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        return spotOpen;
-    }
+    
 
     public void teleport(Hero hero, int newLane) {
         int curLane = hero.getLane().getLaneNumber();

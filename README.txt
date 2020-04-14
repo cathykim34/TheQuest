@@ -1,5 +1,5 @@
-Catherine Kim
-U51788489
+Catherine Kim - U51788489
+Sarah Rieger - U47427637
 
 Compilation Instructions:
 javac GameDriver.java
