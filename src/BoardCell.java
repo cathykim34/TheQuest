@@ -43,7 +43,7 @@ public class BoardCell {
         this.laneNumber = laneNumber;
     }
 
-    private int laneNumber;
+    private int laneNumber; // Cell is type "I" if lane number is -1
 
     public BoardCell(int row, int col){
         this.row = row;
@@ -117,11 +117,11 @@ public class BoardCell {
     //checks if cell has a hero in it already
     public boolean containsHero() {
         for (int i = 0; i < this.contents.length; i++) {
-            if (this.contents[i] == null) {
-                return false;
+            if (this.contents[i] instanceof Hero) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     //checks if cell is empty
