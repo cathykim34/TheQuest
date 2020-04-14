@@ -65,7 +65,6 @@ public abstract class Hero extends Characters{
     public abstract double getMana();
     public abstract int getLevel();
     public abstract boolean armorOn();
-    public abstract boolean handsUsed();
     public abstract void equip(Armory a);
     public abstract void unequip(Armory a);
     public abstract void equip(Weaponry a);
@@ -219,6 +218,11 @@ public abstract class Hero extends Characters{
             }
 
         }while(invalidInput);
+    }
+
+    //checking if armor is on
+    public boolean handsUsed(){
+        return !(this.weapon == null);
     }
 
     //changing either armory or weapon
@@ -393,6 +397,7 @@ public abstract class Hero extends Characters{
 
     }
 
+
     //helper function to getAttacked for dodge probability
     protected boolean attackDodged(Monster m){
         double ran = Math.random();
@@ -406,6 +411,15 @@ public abstract class Hero extends Characters{
             return false;
         }
         return true;
+    }
+
+    public void attack(Monster monster){
+        if(handsUsed()){
+            monster.getAttacked(this.strength+this.weapon.getDamage()*0.05);
+        }
+        else {
+            monster.getAttacked(this.strength*0.05);
+        }
     }
 
 

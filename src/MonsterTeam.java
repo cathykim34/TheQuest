@@ -25,20 +25,21 @@ public class MonsterTeam extends Team {
         return laneMonsters;
     }
 
+    //returns the nearest monster to hero to attack
+    public Monster nearestMonster(Lane lane){
+        ArrayList<Monster> appropriateMonsters = rightLane(lane);
+        return closestMonster(appropriateMonsters);
+    }
+
     //finds monster that is closest to hero's nexus
-    public int[] closestMonster(ArrayList<Monster> monsters){
-        int[] coordinates = new int[2];
-        int maxRow = monsters.get(0).getRow();
-        int maxCol = monsters.get(0).getColumn();
+    public Monster closestMonster(ArrayList<Monster> monsters){
+        Monster nearest = monsters.get(0);
         for(int i = 0; i < monsters.size(); i++){
-            if(monsters.get(i).getRow() > maxRow){
-                maxRow = monsters.get(i).getRow();
-                maxCol = monsters.get(i).getColumn();
+            if(monsters.get(i).getRow() > nearest.getRow()){
+                nearest = monsters.get(i);
             }
         }
-        coordinates[0] = maxRow;
-        coordinates[1] = maxCol;
-        return coordinates;
+        return nearest;
     }
 
     public static int getRounds() {

@@ -73,9 +73,14 @@ public class BoardDriver {
                                 }
                             }
                             if (response.equals("S")) {
-//                                if(hero.useSpell()){
-//                                    makeMove = false;
-//                                }
+                                if(hero.enemyNear(board)){
+                                    if(hero.useSpell(monsters.nearestMonster(hero.getLane()))){
+                                        makeMove = false;
+                                    }
+                                }
+                                else{
+                                    System.out.println("No enemies nearby to use spell on!");
+                                }
                             } else if (response.equals("C")) {
                                 if (hero.changeNotPossible()) {
                                     System.out.println("Currently do not own any armor or weapons.");
@@ -84,7 +89,14 @@ public class BoardDriver {
                                     makeMove= false;
                                 }
                             }
-                        } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
+                        } else if(currentInput.equals("F")) {
+                            if(hero.enemyNear(board)){
+                                hero.attack(monsters.nearestMonster(hero.getLane()));
+                                makeMove= false;
+                            }else{
+                                System.out.println("No enemies nearby!");
+                            }
+                        }else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
                             boolean possible = hero.makeMove(board, currentInput);
                             if (!possible) {
                                 System.out.println("Oops! This move is not possible, please try again.");
@@ -95,6 +107,7 @@ public class BoardDriver {
                         } else if (currentInput.equals("B")) {
                             // Teleport to own nexus
                             board.teleportToNexus(hero);
+                            makeMove= false;
                         } else if (currentInput.equals("T")) {
                             System.out.println("Enter the lane number that you would like to teleport to [0-2]:");
                             int laneNum = input.nextInt();
@@ -102,6 +115,7 @@ public class BoardDriver {
                                 System.out.println("Lane does not exist");
                             } else {
                                 board.teleport(hero, laneNum);
+                                makeMove= false;
                             }
                         } else {
                             System.out.println("Invalid input, please try again.");

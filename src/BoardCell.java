@@ -146,6 +146,18 @@ public class BoardCell {
         return null;
     }
 
+    //return hero
+    public Characters getMonster(){
+        for(int i = 0; i<this.contents.length; i++){
+            if(this.contents[i] != null){
+                if(this.contents[i].getType().equals("Monster")){
+                    return this.contents[i];
+                }
+            }
+        }
+        return null;
+    }
+
     //checks if there is a monster in the cell
     public boolean monsterExists(){
         boolean doesExist = false;
