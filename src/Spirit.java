@@ -2,23 +2,10 @@ import java.util.*;
 
 public class Spirit extends Monster {
     protected static String type = "Exoskeleton";
-    protected String name;
-    protected int level;
-    protected double damage;
-    protected double defense;
-    protected double dodge_chance;
-    protected double HP;
-    protected boolean dead;
 
 
     public Spirit(String name, int level, double damage, double defense, double dodge_chance){
-        this.name = name;
-        this.level = level;
-        this.damage = damage;
-        this.defense = defense;
-        this.dodge_chance = dodge_chance/100;
-        this.HP = 100*this.level;
-        this.dead = false;
+        super(name, level, damage, defense, dodge_chance);
     }
 
 

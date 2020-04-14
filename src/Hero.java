@@ -196,26 +196,6 @@ public abstract class Hero extends Characters{
         return(ran <= this.probDodge);
     }
 
-    public void getAttacked(Monster m) {
-        if(attackDodged()){
-            System.out.println("Attack Dodged!");
-        }
-        else{
-            if(armorOn()){
-                if(this.armor.getDamage_reduction() >= m.getDamage()){
-                    System.out.println("No damage thanks to armor!");
-                }
-                else{
-                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
-                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
-                }
-            }else {
-                this.HP -= m.getDamage();
-                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
-            }
-        }
-    }
-
     //carries out potions
     public void usePotion(){
         Scanner input = new Scanner(System.in);
@@ -443,10 +423,6 @@ public abstract class Hero extends Characters{
             return this.strength+this.weapon.getDamage()*0.05;
         }
         return this.strength*0.05;
-    }
-
-    public void attack(Monster monster, Board board){
-        monster.getAttackedByHero(this, board);
     }
 
     public void getAttackedByHero(Hero h, Board board){}

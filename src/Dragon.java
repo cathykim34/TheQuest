@@ -1,22 +1,9 @@
 import java.util.*;
 public class Dragon extends Monster{
     protected String type = "Dragon";
-    protected String name;
-    protected int level;
-    protected double damage;
-    protected double defense;
-    protected double dodge_chance;
-    protected double HP;
-    protected boolean dead;
 
     public Dragon(String name, int level, double damage, double defense, double dodge_chance){
-        this.name = name;
-        this.level = level;
-        this.damage = damage;
-        this.defense = defense;
-        this.dodge_chance = dodge_chance/100;
-        this.HP = 100*this.level;
-        this.dead = false;
+        super(name, level, damage, defense, dodge_chance);
     }
     public static ArrayList<? extends Monster> existingTypes(){
         ArrayList<Dragon> all = new ArrayList<>();

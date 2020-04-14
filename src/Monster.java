@@ -160,7 +160,15 @@ public abstract class Monster extends Characters{
         }
     }
 
-    public Monster(){}
+    public Monster(String name, int level, double damage, double defense, double dodge_chance){
+        this.name = name;
+        this.level = level;
+        this.damage = damage;
+        this.defense = defense;
+        this.dodge_chance = dodge_chance/100;
+        this.HP = 100*this.level;
+        this.dead = false;
+    }
 
     public String toString(){
         String ret = "";
