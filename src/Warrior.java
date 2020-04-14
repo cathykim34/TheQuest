@@ -1,36 +1,10 @@
 import java.util.*;
 public class Warrior extends Hero{
     protected String type = "Warrior";
-    protected String name;
-    protected int experience;
-    protected double HP;
-    protected Wallet wallet;
-    protected double mana;
-    protected double strength;
-    protected double agility;
-    protected double dexterity;
-    protected int level;
-    protected double probDodge;
-    protected Weaponry weapon;
-    protected Armory armor;
-    protected Backpack backpack;
-    protected int row;
-    protected int column;
-    protected int lane;
     protected static ArrayList<Hero> all = new ArrayList<>();
 
     public Warrior(String name, int mana, int strength, int agility, int dexterity, int starting_money, int starting_exp){
-        this.name = name;
-        this.mana = mana;
-        this.strength = strength;
-        this.agility = agility;
-        this.dexterity = dexterity;
-        this.wallet = new Wallet(starting_money);
-        this.level = 1;
-        this.experience = starting_exp;
-        this.HP = this.level*100;
-        this.probDodge = (0.02*this.agility)/100;
-        this.backpack = new Backpack();
+        super(name, mana, strength, agility, dexterity, starting_money, starting_exp);
     }
 
     //returns hero type

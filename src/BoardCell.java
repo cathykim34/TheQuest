@@ -132,7 +132,7 @@ public class BoardCell {
     public Characters getHero(){
         for(int i = 0; i<this.contents.length; i++){
             if(this.contents[i] != null){
-                if(!this.contents[i].getType().equals("Monster")){
+                if(this.contents[i] instanceof Hero){
                     return this.contents[i];
                 }
             }

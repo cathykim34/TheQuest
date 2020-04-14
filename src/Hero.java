@@ -21,6 +21,21 @@ public abstract class Hero extends Characters{
     protected Lane lane;
     protected Lane nexus;
     protected double probDodge;
+    protected int experience;
+
+    public Hero(String name, int mana, int strength, int agility, int dexterity, int starting_money, int starting_exp){
+        this.name = name;
+        this.mana = mana;
+        this.strength = strength;
+        this.agility = agility;
+        this.dexterity = dexterity;
+        this.wallet = new Wallet(starting_money);
+        this.level = 1;
+        this.experience = starting_exp;
+        this.HP = this.level*100;
+        this.probDodge = (0.02*this.agility)/100;
+        this.backpack = new Backpack();
+    }
 
     public Lane getNexus() {
         return nexus;

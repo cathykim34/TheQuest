@@ -2,38 +2,12 @@ import java.util.*;
 
 public class Paladin extends Hero{
     protected static String type = "Paladin";
-    protected String name;
-    protected int level;
-    protected double HP;
-    protected Wallet wallet;
-    protected double mana;
-    protected double strength;
-    protected double agility;
-    protected double dexterity;
-    protected int experience;
-    protected double probDodge;
-    protected Weaponry weapon;
-    protected Armory armor;
-    protected Backpack backpack;
-    protected int row;
-    protected int column;
-    protected int lane;
     private static ArrayList<Hero> all = new ArrayList<>();
 
-    public Paladin(){}
+//    public Paladin(){}
 
     public Paladin(String name, int mana, int strength, int agility, int dexterity, int starting_money, int starting_exp){
-        this.name = name;
-        this.mana = mana;
-        this.strength = strength;
-        this.agility = agility;
-        this.dexterity = dexterity;
-        this.wallet = new Wallet(starting_money);
-        this.level = 1;
-        this.experience = starting_exp;
-        this.HP = this.level*100;
-        this.probDodge = (0.02*this.agility)/100;
-        this.backpack = new Backpack();
+        super(name, mana, strength, agility, dexterity, starting_money, starting_exp);
     }
 
     public boolean attackDodged() {
