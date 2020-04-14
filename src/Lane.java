@@ -5,6 +5,7 @@ public class Lane {
 
     public Lane(int laneNumber, BoardCell[][] cells){
         this.laneNumber = laneNumber;
+        this.cells = new BoardCell[cells.length][cells[0].length];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 cells[i][j].setLaneNumber(laneNumber);

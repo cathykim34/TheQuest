@@ -25,22 +25,25 @@ public class Board {
         int colPlaceholder = 0; // keep track of which column the lane starts at
         int colsPerLane = (this.boardArray.length - (this.lanes.length-1))/this.lanes.length; // How many cols each lane will have
         for (int lane = 0; lane < this.lanes.length; lane++) {
-            this.lanes[lane] = new Lane(lane, getLane(0, this.boardArray.length, colPlaceholder, colPlaceholder+colsPerLane-1));
+            this.lanes[lane] = new Lane(lane, getLaneCells(0, this.boardArray.length-1, colPlaceholder, colPlaceholder+colsPerLane-1));
             colPlaceholder += (colsPerLane+1);
         }
     }
 
 
     // Get the cells to put in a given lane; inputs are the range (inclusive) of rows and cols
-    private BoardCell[][] getLane(int startRow, int endRow, int startCol, int endCol) {
-        BoardCell[][] result = new BoardCell[endRow-startRow+1][endCol-startCol+1];
+    private BoardCell[][] getLaneCells(int startRow, int endRow, int startCol, int endCol) {
+        int width = endCol-startCol+1;
+        int height = endRow-startRow+1;
+        BoardCell[][] result = new BoardCell[height][width];
         int curRow = 0;
         int curCol = 0;
-        for (int i = startRow; i < endRow; i++) {
-            for (int j = startCol; j < endCol; j++) {
+        for (int i = startRow; i <= endRow; i++) {
+            for (int j = startCol; j <= endCol; j++) {
                 result[curRow][curCol] = this.boardArray[i][j];
                 curCol++;
             }
+            curCol = 0;
             curRow++;
         }
         return result;
@@ -84,7 +87,7 @@ public class Board {
         String result = "";
 
         for (int i = 0; i < this.row; i++) {
-            printRow(i);
+            result += printRow(i);
         }
 
         return result;
