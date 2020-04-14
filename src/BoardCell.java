@@ -160,7 +160,7 @@ public class BoardCell {
         }
         for(int i = 0; i < this.contents.length; i++){
             if(this.contents[i] != null){
-                if(this.contents[i].getType().equals("Monster")){
+                if(this.contents[i] instanceof Monster){
                     return true;
                 }
             }

@@ -31,11 +31,12 @@ public class BoardDriver {
             System.out.println("To make changes armor, weapon, take a potion or cast a spell, press C");
             System.out.println("To teleport to your team's nexus, enter B");
             System.out.println("To teleport to another lane, enter T");
-            System.out.println(board.toString());
             System.out.println("(Tiles with I's around them are walls, so users cannot move there.");
 
             //each hero gets a turn
             for(Hero hero: team.getTeam()) {
+                System.out.println(board.toString());
+
                 boolean makeMove = true;
                 board.boardArray[hero.getRow()][hero.getColumn()].cellAction(hero);
                 do {

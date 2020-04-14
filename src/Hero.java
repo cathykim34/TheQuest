@@ -116,12 +116,12 @@ public abstract class Hero extends Characters{
         int tempRow = this.row;
         if(move.equals("W")){
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow--][tempCol];
+                BoardCell newCell = board.boardArray[tempRow-1][tempCol];
                 if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
-                    this.setRow(tempRow);
+                    this.setRow(tempRow-1);
                     newCell.cellAction(this);
                     spotOpen = true;
                 } else {
@@ -136,12 +136,12 @@ public abstract class Hero extends Characters{
             //check for monsters nearby
             if(!enemyNear(board)) {
                 if (!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)) {
-                    BoardCell newCell = board.boardArray[tempRow][tempCol--];
+                    BoardCell newCell = board.boardArray[tempRow][tempCol-1];
                     if (!newCell.isFull() && !newCell.heroExists()) {
                         BoardCell oldCell = board.boardArray[tempRow][tempCol];
                         oldCell.removeCharacter(this);
                         newCell.addCharacter(this);
-                        this.setColumn(tempCol);
+                        this.setColumn(tempCol-1);
                         newCell.cellAction(this);
                         spotOpen = true;
                     } else {
@@ -154,12 +154,12 @@ public abstract class Hero extends Characters{
         }
         else if(move.equals("S")){
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow++][tempCol];
+                BoardCell newCell = board.boardArray[tempRow+1][tempCol];
                 if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
-                    this.setRow(tempRow);
+                    this.setRow(tempRow+1);
                     newCell.cellAction(this);
                     spotOpen = true;
                 } else {
@@ -172,12 +172,12 @@ public abstract class Hero extends Characters{
         }
         else if (move.equals("D")){
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow][tempCol++];
+                BoardCell newCell = board.boardArray[tempRow][tempCol+1];
                 if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
-                    this.setColumn(tempCol);
+                    this.setColumn(tempCol+1);
                     newCell.cellAction(this);
                     spotOpen = true;
                 } else {
