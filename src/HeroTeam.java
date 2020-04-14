@@ -41,16 +41,28 @@ public class HeroTeam extends Team {
         while (validInput) ;
         return (list.get(0));
     }
+
+    //update hero health every round
+    public void roundHealthIncrease(){
+        for(Hero h: this.heroes){
+            h.setMana((h.getMana()*0.1));
+            h.setHP(h.getHP()*0.1);
+        }
+    }
+
     //helper function for first assigning positions at beginning of game
     private void assignPosition(Board board){
         int j = -3;
         for(int i = 0; i<this.heroes.size(); i++) {
-            this.heroes.get(i).setLane(i);
+            this.heroes.get(i).setLane(board.lanes[i]);
+            this.heroes.get(i).setNexus(board.lanes[i]);
             this.heroes.get(i).setRow(board.row);
             this.heroes.get(i).setColumn(j+3);
+            this.heroes.get(i).setNickname("h" + (i+1));
         }
     }
 
+    //choose heroes
     public void addHeroes(Board board) {
         Hero.allHeroTypes();
         Scanner input = new Scanner(System.in);

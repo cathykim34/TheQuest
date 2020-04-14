@@ -2,7 +2,7 @@ import java.util.*;
 
 public class FightDriver {
     public FightDriver(){}
-    public void play(){
+    public void play(Board board){
         Scanner input = new Scanner(System.in);
         System.out.println("Surprise Battle!");
         System.out.println("Rules of the Game: ");
@@ -98,6 +98,8 @@ public class FightDriver {
                 //check if current character fainted
                 if(h.checkFainted()){
                     System.out.println("Oh no- looks like " + h.getName()+ " fainted!" + "\n");
+                    System.out.println(h.getName() + " will be respawned at their Nexus.");
+                    h.respawn(board);
                     break;
                 }
                 //check if monster was defeated
@@ -405,7 +407,7 @@ public class FightDriver {
     }
 
     //returns the new copy of chosen monster
-    private <T extends Monster>Monster newCopy(Monster m){
+    protected <T extends Monster>Monster newCopy(Monster m){
         String type = m.getType();
         if(type.equals("Exoskeleton")){
             return newInstanceExoskeleton(m);

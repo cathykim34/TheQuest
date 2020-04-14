@@ -1,10 +1,10 @@
 import java.util.*;
 
-public class Paladin extends Hero implements Fight{
+public class Paladin extends Hero{
     protected static String type = "Paladin";
     protected String name;
     protected int level;
-    protected int HP;
+    protected double HP;
     protected Wallet wallet;
     protected double mana;
     protected double strength;
@@ -36,7 +36,6 @@ public class Paladin extends Hero implements Fight{
         this.backpack = new Backpack();
     }
 
-    @Override
     public boolean attackDodged() {
         double ran = Math.random();
         return(ran <= this.probDodge);
@@ -64,6 +63,9 @@ public class Paladin extends Hero implements Fight{
         this.experience += i;
         levelUp();
     }
+
+
+
     public double getMana(){
         return this.mana;
     }
@@ -95,16 +97,22 @@ public class Paladin extends Hero implements Fight{
     }
 
     @Override
-    public void setHP(int i){
+    public void setHP(double i){
         this.HP += i;
     }
+
+    @Override
+    public double getHP() {
+        return this.HP;
+    }
+
     @Override
     public void setStrength(int i) {
         this.strength += i;
     }
 
     @Override
-    public void setMana(int i) {
+    public void setMana(double i) {
         this.mana += i;
     }
     @Override
@@ -120,16 +128,6 @@ public class Paladin extends Hero implements Fight{
     @Override
     public void setAgility(int i) {
         this.agility += i;
-    }
-
-    @Override
-    public void makeMove(Monster m) {
-        if(handsUsed()){
-            m.getAttacked((this.strength+this.weapon.getDamage())*0.05);
-        }
-        else{
-            m.getAttacked(this.strength*0.05);
-        }
     }
 
     //buying objects

@@ -1,5 +1,6 @@
 import java.util.*;
-public abstract class Monster extends Characters {
+public abstract class Monster extends Characters{
+    protected String Type = "Monster";
     protected String name;
     protected int level;
     protected double damage;
@@ -7,6 +8,7 @@ public abstract class Monster extends Characters {
     protected double dodge_chance;
     protected double HP;
     protected double dead;
+    protected boolean reachedNexus = false;
     public abstract void currentStats();
     public static ArrayList<Monster> all;
     public abstract boolean checkDeath();
@@ -22,10 +24,9 @@ public abstract class Monster extends Characters {
     public abstract void setDefense(double d);
     public abstract void getSpellCasted(double d);
     protected static int maxLevel = 10;
-
-    public static int getMaxLevel(){
-        return Monster.maxLevel;
-    }
+    protected Lane lane;
+    protected Lane nexus;
+    protected String nickname = "M";
 
     //new instances of monsters
     public static ArrayList<Monster> allPossible(){
@@ -34,6 +35,84 @@ public abstract class Monster extends Characters {
         huge.addAll(Dragon.existingTypes());
         huge.addAll(Spirit.existingTypes());
         return huge;
+    }
+
+    //either move forward or fight
+    public void makeMove(Board board){
+        if(!enemyNear(board)){
+            //only move forward is cell isn't full
+            if(!board.boardArray[this.row+1][this.column].isFull()){
+                //leave current cell
+                board.boardArray[this.row][this.column].removeCharacter(this);
+                //move to cell in front
+                this.row++;
+                //enter new cell
+                board.boardArray[this.row][this.column].addCharacter(this);
+                //check if monsters arrived at heroNexus
+                if(board.boardArray[this.row][this.column].getIsHeroNexus()){
+                    this.reachedNexus = true;
+                }
+            }
+        }
+    }
+
+    @Override
+    //check if there is a hero nearby
+    public boolean enemyNear(Board board){
+        if(board.boardArray[this.row-1][this.column].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        //if monster is in your cell
+        else if(board.boardArray[this.row][this.column].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        //if monster is diagonally in front
+        else if(board.boardArray[this.row-1][this.column+1].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        else if(board.boardArray[this.row-1][this.column-1].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        //if monster is next to you
+        else if(board.boardArray[this.row][this.column+1].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        //if monster is next to you
+        else if(board.boardArray[this.row][this.column-1].heroExists()){
+            //get the hero and attack them
+            board.boardArray[this.row-1][this.column].getHero().getAttacked(this);
+            return true;
+        }
+        return false;
+    }
+    //getters and setters for attributes
+    public Lane getNexus() {
+        return nexus;
+    }
+    public void setNexus(Lane nexus) {
+        this.nexus = nexus;
+    }
+    public Lane getLane() {
+        return lane;
+    }
+    public void setLane(Lane lane) {
+        this.lane = lane;
+    }
+    public static int getMaxLevel(){
+        return Monster.maxLevel;
+    }
+    public boolean isReachedNexus() {
+        return reachedNexus;
     }
 
     public Monster(){}

@@ -1,4 +1,5 @@
 public class Lane {
+
     private int laneNumber;
     private BoardCell[][] cells;
 
@@ -10,5 +11,17 @@ public class Lane {
                 this.cells[i][j] = cells[i][j];
             }
         }
+    }
+
+    public int getLaneNumber() {
+        return laneNumber;
+    }
+
+    public void setLaneNumber(int laneNumber) {
+        this.laneNumber = laneNumber;
+    }
+
+    public BoardCell[][] getCells() {
+        return cells;
     }
 }

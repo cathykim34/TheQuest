@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 public class QuestDriver{
 
@@ -31,6 +32,7 @@ public class QuestDriver{
         md.play(m);
     }
 
+    //begins the choosing of term team
     public HeroTeam createHeroTeam(Board board){
         System.out.println("Now lets pick your team of heroes!");
         HeroTeam t = new HeroTeam();
@@ -38,10 +40,11 @@ public class QuestDriver{
         return t;
     }
 
-    public MonsterTeam createMonsterTeam(HeroTeam heroes){
+    //creates the monster team depending on the heroes
+    public MonsterTeam createMonsterTeam(HeroTeam heroes, Board board){
         System.out.println("Meet your opponents!");
         MonsterTeam m = new MonsterTeam();
-        m.addMonsters(heroes);
+        m.addMonsters(board, heroes);
         for(Characters monster : m.getTeam()){
             System.out.println(monster);
         }
@@ -55,12 +58,22 @@ public class QuestDriver{
         return(ran <= battle_chance);
     }
 
-    //if randomly appears, begin fight sequence
-    public void checkForBattle(){
+    //if randomly appears, begin fight sequences
+    public void checkForBattle(Board board){
         if(battleAppeared()){
             FightDriver FD = new FightDriver();
-            FD.play();
+            FD.play(board);
         }
+    }
+
+    //checks if monsters won
+    public boolean monstersWon(MonsterTeam monsters){
+        for(Monster m: monsters.getTeam()){
+            if(m.isReachedNexus()){
+                return true;
+            }
+        }
+        return false;
     }
 
     //gives user choice to take potion or put on armory/weapon
@@ -68,7 +81,7 @@ public class QuestDriver{
         Scanner input = new Scanner(System.in);
         boolean invalidInput = true;
         do{
-            System.out.println("If you would like to take a potion enter P, if you would like to change armory or weapons enter C, or if none of these, enter N ");
+            System.out.println("If you would like to take a potion enter P, if you would like to change armory or weapons enter C, if you would like to cast a spell enter S or if none of these, enter N ");
             try{
                 String in = input.next();
                 String letter = in.toUpperCase();
@@ -77,6 +90,9 @@ public class QuestDriver{
                 }
                 else if(letter.equals("C")){
                     return"C";
+                }
+                else if(letter.equals("S")){
+                    return"S";
                 }
                 else if(letter.equals("N")){
                     return"N";

@@ -60,7 +60,10 @@ public class Board {
                 // These columns are the 2 barrier walls between the 3 lanes, so they are type "I"
                 cellType = "I";
             }
-            BoardCell cell = new BoardCell(cellType);
+            BoardCell cell = new BoardCell(rowIndex, j, cellType);
+            if (cell.getType().equals("I")){
+                cell.setLaneNumber(-1);
+            }
             if (isNexusRow && rowIndex != 0) {
                 // Hero nexus must be identified as such
                 cell.setHeroNexus(true);
@@ -76,109 +79,6 @@ public class Board {
         return types[randomIndex];
     }
 
-
-    //check if input is a valid movement
-    public boolean validInput(String s){
-        return(s.equals("W")||s.equals("D")|| s.equals("A")|| s.equals("S")|| s.equals("I") || s.equals("Q"));
-    }
-
-    //check if chosen movement hits a wall
-    public boolean wallExists(int col, int row){
-        BoardCell b = this.boardArray[row][col];
-        return(b.getType().equals("I"));
-    }
-
-    // CHeck if there is a fight to take place
-    public boolean isFight() {
-        return false;
-    }
-
-
-    //check if chosen movement exists on board
-    public boolean boardEdge(int col, int row){
-        return(col >= this.column && row >= this.row);
-    }
-
-    //returns whether that move is possible or not
-    public boolean makeMove(Hero hero, String move) {
-        boolean spotOpen = false;
-        int tempCol = hero.getColumn();
-        int tempRow = hero.getRow();
-        if(move.equals("W")){
-            tempRow--;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setRow(tempRow);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        else if(move.equals("A")){
-            tempCol--;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setColumn(tempCol);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-
-        }
-        else if(move.equals("S")){
-            tempRow++;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setRow(tempRow);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-            }
-            else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        else if (move.equals("D")){
-            tempCol++;
-            if(!wallExists(tempCol, tempRow) && !boardEdge(tempCol, tempRow)){
-                BoardCell newCell = this.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
-                    BoardCell oldCell = this.boardArray[tempRow++][tempCol];
-                    oldCell.removeCharacter(hero);
-                    newCell.addCharacter(hero);
-                    hero.setColumn(tempCol);
-                    spotOpen = true;
-                } else {
-                    System.out.println("Oops! This cell is at max capacity.");
-                }
-
-            }else{
-                System.out.println("Oof hit a wall!");
-            }
-        }
-        return spotOpen;
-    }
 
     public String toString(){
         String result = "";
@@ -239,5 +139,99 @@ public class Board {
     }
 
 
+
+    //check if chosen movement hits a wall
+    public boolean wallExists(int col, int row){
+        BoardCell b = this.boardArray[row][col];
+        return(b.getType().equals("I"));
+    }
+
+    //check if chosen movement exists on board
+    public boolean boardEdge(int col, int row){
+        return(col >= this.column && row >= this.row);
+    }
+    
+
+    public void teleport(Hero hero, int newLane) {
+        int curLane = hero.getLane().getLaneNumber();
+        if (curLane != newLane) {
+            Lane lane = this.lanes[newLane];
+            boolean success = teleportToHero(lane, hero);
+            if (success){
+                System.out.println("You have teleported!");
+            } else{
+                System.out.println("Cannot teleport to fellow hero; space full");
+            }
+        } else {
+            System.out.println("Cannot teleport to current lane");
+        }
+    }
+
+    private boolean teleportToHero(Lane lane, Hero hero) {
+        // We can only teleport to a fellow hero
+        BoardCell[][] cells = lane.getCells();
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                BoardCell cell = cells[i][j];
+                Characters[] contents = cell.getContents();
+                for (Characters c:contents){
+                    // Find the hero in the destination lane
+                    if (c.nickname.indexOf("H") != -1) {
+                        // The nickname contains H, so it is a fellow hero
+
+                        // We need the neighboring cell bc two heroes cannot be in the same cell
+                        BoardCell destination = getNeighboringCell(cell);
+                        if(destination != null){
+                            // We move the character to the new cell
+                            destination.addCharacter(hero);
+                            hero.setLane(lane);
+                            destination.cellAction(hero);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public BoardCell getNeighboringCell(BoardCell cell){
+        int row = cell.getRow();
+        int col = cell.getCol();
+        if (!boardEdge(col-1, row) && wallExists(col-1, row)) {
+            BoardCell leftCell = this.boardArray[row][col-1];
+            if (!leftCell.heroExists()) {
+                return leftCell;
+            }
+        }
+        if (!boardEdge(col+1, row) && wallExists(col+1, row)) {
+            BoardCell rightCell = this.boardArray[row][col+1];
+            if (!rightCell.heroExists()) {
+                return rightCell;
+            }
+        }
+
+        return null;
+    }
+
+    public void teleportToNexus(Hero hero) {
+        Lane nexusLane = hero.getNexus();
+        BoardCell[][] cells = nexusLane.getCells();
+        BoardCell nexus = cells[cells.length-1][0];
+        int row = nexus.getRow();
+        int col = nexus.getCol();
+        // Get nexus cell for the given lane
+        BoardCell newCell = this.boardArray[row][col];
+        if (!newCell.isFull() && !newCell.heroExists()) {
+            // Put hero in cell since it is not full
+            newCell.addCharacter(hero);
+            hero.setLane(nexusLane);
+            hero.setRow(row);
+            hero.setColumn(col);
+            newCell.cellAction(hero);
+        } else {
+            System.out.println("Your Nexus is occupied! Cannot go there now");
+        }
+    }
 
 }
