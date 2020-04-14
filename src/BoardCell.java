@@ -232,9 +232,11 @@ public class BoardCell {
         String choice = input.next();
         choice = choice.toUpperCase();
         if (choice.equals("y")) {
+            Weaponry.existingTypes();
+            Armory.existingTypes();
             Market market = new Market();
             MarketDriver driver = new MarketDriver();
-            driver.play(market);
+            driver.play(market, hero);
         }
     }
 

@@ -1,5 +1,5 @@
 import java.util.*;
-public class Dragon extends Monster implements Fight{
+public class Dragon extends Monster{
     protected String type = "Dragon";
     protected String name;
     protected int level;
@@ -40,6 +40,8 @@ public class Dragon extends Monster implements Fight{
         System.out.println("HP: " + this.HP + "\n");
     }
 
+
+
     @Override
     public String getType() {
         return this.type;
@@ -70,36 +72,17 @@ public class Dragon extends Monster implements Fight{
         return this.name;
     }
 
+
     @Override
     public void getSpellCasted(double d){
         this.damage -= d;
     }
 
-    @Override
-    public void makeMove(Monster m) {
-
-    }
-    @Override
-    public void getAttacked(Monster m) {
-
-    }
-
-    @Override
-    public boolean attackDodged(){
-        double ran = Math.random();
-        return(ran <= this.dodge_chance);
-    }
 
 
-    //check if monster has been defeated
-    public boolean checkDeath(){
-        if (this.HP <= 0){
-            this.dead = true;
-            System.out.println("Monster defeated!!");
-            return true;
-        }
-        return false;
-    }
+
+
+
     //spells used on monsters
     @Override
     public void setDamage(double d){
@@ -116,21 +99,7 @@ public class Dragon extends Monster implements Fight{
         this.dodge_chance -= (this.dodge_chance*d);
     }
 
-    @Override
-    public void getAttacked(double d) {
-        if(attackDodged()){
-            System.out.println("Attack dodged! No damage received.");
-        }
-        else{
-            if(this.defense > d){
-                System.out.println("No damage due to " + this.name + "'s defense");
-            }
-            else{
-                this.HP -= (this.defense - d);
-                checkDeath();
-            }
-        }
-    }
+
 
     public String toString(){
         String ret = "";

@@ -20,6 +20,7 @@ public abstract class Hero extends Characters{
     protected int column;
     protected Lane lane;
     protected Lane nexus;
+    protected double probDodge;
 
     public Lane getNexus() {
         return nexus;
@@ -69,7 +70,6 @@ public abstract class Hero extends Characters{
     public abstract void unequip(Armory a);
     public abstract void equip(Weaponry a);
     public abstract void unequip(Weaponry a);
-    public abstract void getAttacked(Monster m);
     public abstract boolean checkFainted();
     public abstract String getBackpack();
     public abstract void addXP(int i);
@@ -188,6 +188,31 @@ public abstract class Hero extends Characters{
             }
         }
         return spotOpen;
+    }
+
+    public boolean attackDodged() {
+        double ran = Math.random();
+        return(ran <= this.probDodge);
+    }
+
+    public void getAttacked(Monster m) {
+        if(attackDodged()){
+            System.out.println("Attack Dodged!");
+        }
+        else{
+            if(armorOn()){
+                if(this.armor.getDamage_reduction() >= m.getDamage()){
+                    System.out.println("No damage thanks to armor!");
+                }
+                else{
+                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
+                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
+                }
+            }else {
+                this.HP -= m.getDamage();
+                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
+            }
+        }
     }
 
     //carries out potions
@@ -412,13 +437,37 @@ public abstract class Hero extends Characters{
         }
         return true;
     }
-
-    public void attack(Monster monster){
+    public double getHeroDamage(){
         if(handsUsed()){
-            monster.getAttacked(this.strength+this.weapon.getDamage()*0.05);
+            return this.strength+this.weapon.getDamage()*0.05;
         }
-        else {
-            monster.getAttacked(this.strength*0.05);
+        return this.strength*0.05;
+    }
+
+    public void attack(Monster monster, Board board){
+        monster.getAttackedByHero(this, board);
+    }
+
+    public void getAttackedByHero(Hero h, Board board){}
+
+    //how much damage to get from an attack
+    public void getAttackedByMonster(Monster m, Board board) {
+        if(attackDodged()){
+            System.out.println("Attack Dodged!");
+        }
+        else{
+            if(armorOn()){
+                if(this.armor.getDamage_reduction() >= m.getDamage()){
+                    System.out.println("No damage thanks to armor!");
+                }
+                else{
+                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
+                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
+                }
+            }else {
+                this.HP -= m.getDamage();
+                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
+            }
         }
     }
 

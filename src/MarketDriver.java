@@ -3,10 +3,9 @@ import java.util.*;
 public class MarketDriver{
     public MarketDriver(){}
 
-    public void play(Market m){
+    public void play(Market m, Hero h){
 
             //each hero gets a chance to shop in the market
-            for(Hero h: Team.getHeroes()) {
                 Scanner input = new Scanner(System.in);
                 System.out.println("Welcome to the Market " + h.getName() + "!");
                 System.out.println("Markets can be used to either buy items or sell currently owned items");
@@ -42,7 +41,6 @@ public class MarketDriver{
 
                 } while (keepShopping);
             }
-    }
 
     //check if hero has anything to even sell
     private boolean sellingPossible(Hero h){

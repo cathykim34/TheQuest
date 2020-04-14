@@ -70,26 +70,7 @@ public class Paladin extends Hero{
         return this.mana;
     }
     //how much damage to get from an attack
-    @Override
-    public void getAttacked(Monster m) {
-        if(attackDodged()){
-            System.out.println("Attack Dodged!");
-        }
-        else{
-            if(armorOn()){
-                if(this.armor.getDamage_reduction() >= m.getDamage()){
-                    System.out.println("No damage thanks to armor!");
-                }
-                else{
-                    this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
-                    System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
-                }
-            }else {
-                this.HP -= m.getDamage();
-                System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
-            }
-        }
-    }
+
     @Override
     public void finishRound(){
         this.HP += (this.HP*0.05);

@@ -23,15 +23,6 @@ public class QuestDriver{
         Buyable.addAllTypes();
     }
 
-    //creates all necessary elements for the market
-    public void market(){
-        Weaponry.existingTypes();
-        Armory.existingTypes();
-        Market m = new Market();
-        MarketDriver md = new MarketDriver();
-        md.play(m);
-    }
-
     //begins the choosing of term team
     public HeroTeam createHeroTeam(Board board){
         System.out.println("Now lets pick your team of heroes!");
@@ -55,15 +46,7 @@ public class QuestDriver{
     private boolean battleAppeared() {
         double battle_chance = 0.75;
         double ran = Math.random();
-        return(ran <= battle_chance);
-    }
-
-    //if randomly appears, begin fight sequence
-    public void checkForBattle(){
-        if(battleAppeared()){
-            FightDriver FD = new FightDriver();
-            FD.play();
-        }
+        return (ran <= battle_chance);
     }
 
     //checks if monsters won

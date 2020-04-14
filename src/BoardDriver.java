@@ -16,19 +16,6 @@ public class BoardDriver {
         return board;
     }
 
-
-    public void takePotion(Hero h){
-        if(h.getBP().getPotions().isEmpty()){
-            System.out.println("Currently do not own any potions!");
-        }
-        else {
-            FightDriver FD = new FightDriver();
-            FD.usePotion(h);
-        }
-
-    }
-
-
     //enter board game to start playing
     public void enterTheWorld(HeroTeam team, Board board, QuestDriver QD){
 
@@ -91,7 +78,8 @@ public class BoardDriver {
                             }
                         } else if(currentInput.equals("F")) {
                             if(hero.enemyNear(board)){
-                                hero.attack(monsters.nearestMonster(hero.getLane()));
+                                Monster m = monsters.nearestMonster(hero.getLane());
+                                m.getAttackedByHero(hero, board);
                                 makeMove= false;
                             }else{
                                 System.out.println("No enemies nearby!");
