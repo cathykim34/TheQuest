@@ -46,6 +46,8 @@ public class BoardDriver {
             System.out.println("To teleport to another lane, enter T");
             System.out.println(board);
             System.out.println("(Tiles with I's around them are walls, so users cannot move there.");
+
+            //each hero gets a turn
             for(Hero hero: team.getTeam()) {
                 boolean makeMove = true;
                 do {
@@ -109,6 +111,9 @@ public class BoardDriver {
                         System.out.println("Invalid move, please try again.");
                     }
                 }while(makeMove);
+                if(enterQuit) {
+                    break;
+                }
                 for (Monster m : monsters.getTeam()) {
                     m.makeMove(board);
                     if(QD.monstersWon(monsters)){
@@ -131,6 +136,8 @@ public class BoardDriver {
         MonsterTeam.setRounds(1);
         monsters.addMonsters(board, team);
     }
+
+    //changing clothes/weapon
     public void change(Hero h){
         h.changeWorA();
         Scanner input = new Scanner(System.in);

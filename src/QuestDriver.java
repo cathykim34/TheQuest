@@ -81,7 +81,7 @@ public class QuestDriver{
         Scanner input = new Scanner(System.in);
         boolean invalidInput = true;
         do{
-            System.out.println("If you would like to take a potion enter P, if you would like to change armory or weapons enter C, or if none of these, enter N ");
+            System.out.println("If you would like to take a potion enter P, if you would like to change armory or weapons enter C, if you would like to cast a spell enter S or if none of these, enter N ");
             try{
                 String in = input.next();
                 String letter = in.toUpperCase();
@@ -90,6 +90,9 @@ public class QuestDriver{
                 }
                 else if(letter.equals("C")){
                     return"C";
+                }
+                else if(letter.equals("S")){
+                    return"S";
                 }
                 else if(letter.equals("N")){
                     return"N";
