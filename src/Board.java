@@ -61,7 +61,9 @@ public class Board {
                 cellType = "I";
             }
             BoardCell cell = new BoardCell(rowIndex, j, cellType);
-
+            if (cell.getType().equals("I")){
+                cell.setLaneNumber(-1);
+            }
             if (isNexusRow && rowIndex != 0) {
                 // Hero nexus must be identified as such
                 cell.setHeroNexus(true);
@@ -176,11 +178,14 @@ public class Board {
                     // Find the hero in the destination lane
                     if (c.nickname.indexOf("H") != -1) {
                         // The nickname contains H, so it is a fellow hero
-                        if(!cell.isFull()){
+
+                        // We need the neighboring cell bc two heroes cannot be in the same cell
+                        BoardCell destination = getNeighboringCell(cell);
+                        if(destination != null){
                             // We move the character to the new cell
-                            cell.addCharacter(hero);
+                            destination.addCharacter(hero);
                             hero.setLane(lane);
-                            cell.cellAction(hero);
+                            destination.cellAction(hero);
                             return true;
                         }
                     }
@@ -188,6 +193,25 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public BoardCell getNeighboringCell(BoardCell cell){
+        int row = cell.getRow();
+        int col = cell.getCol();
+        if (!boardEdge(col-1, row) && wallExists(col-1, row)) {
+            BoardCell leftCell = this.boardArray[row][col-1];
+            if (!leftCell.heroExists()) {
+                return leftCell;
+            }
+        }
+        if (!boardEdge(col+1, row) && wallExists(col+1, row)) {
+            BoardCell rightCell = this.boardArray[row][col+1];
+            if (!rightCell.heroExists()) {
+                return rightCell;
+            }
+        }
+
+        return null;
     }
 
     public void teleportToNexus(Hero hero) {
@@ -198,7 +222,7 @@ public class Board {
         int col = nexus.getCol();
         // Get nexus cell for the given lane
         BoardCell newCell = this.boardArray[row][col];
-        if (!newCell.isFull()) {
+        if (!newCell.isFull() && !newCell.heroExists()) {
             // Put hero in cell since it is not full
             newCell.addCharacter(hero);
             hero.setLane(nexusLane);

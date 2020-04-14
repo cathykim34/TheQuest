@@ -113,7 +113,7 @@ public abstract class Hero extends Characters{
             tempRow--;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
                 BoardCell newCell = board.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
+                if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow++][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
@@ -134,7 +134,7 @@ public abstract class Hero extends Characters{
                 tempCol--;
                 if (!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)) {
                     BoardCell newCell = board.boardArray[tempRow][tempCol];
-                    if (!newCell.isFull()) {
+                    if (!newCell.isFull() && !newCell.heroExists()) {
                         BoardCell oldCell = board.boardArray[tempRow++][tempCol];
                         oldCell.removeCharacter(this);
                         newCell.addCharacter(this);
@@ -153,7 +153,7 @@ public abstract class Hero extends Characters{
             tempRow++;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
                 BoardCell newCell = board.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
+                if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow++][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
@@ -172,7 +172,7 @@ public abstract class Hero extends Characters{
             tempCol++;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
                 BoardCell newCell = board.boardArray[tempRow][tempCol];
-                if (!newCell.isFull()) {
+                if (!newCell.isFull() && !newCell.heroExists()) {
                     BoardCell oldCell = board.boardArray[tempRow++][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
@@ -508,6 +508,11 @@ public abstract class Hero extends Characters{
         return Hero.allHeroes;
     }
 
+    public void respawn(Board board) {
+        // This function also takes care of the cell's action,
+        // which is reviving and opening the market
+        board.teleportToNexus(this);
+    }
 
 
 

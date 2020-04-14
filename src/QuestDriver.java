@@ -42,13 +42,6 @@ public class QuestDriver{
         return m;
     }
 
-    //probability that battle appears in common tile
-    private boolean battleAppeared() {
-        double battle_chance = 0.75;
-        double ran = Math.random();
-        return (ran <= battle_chance);
-    }
-
     //checks if monsters won
     public boolean monstersWon(MonsterTeam monsters){
         for(Monster m: monsters.getTeam()){
