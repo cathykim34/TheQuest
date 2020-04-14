@@ -13,9 +13,6 @@ public abstract class Characters {
     //checks if there is a monster or hero in front of a character
     public abstract boolean enemyNear(Board board);
 
-    //checks if character is fainted (from attack)
-    public abstract boolean checkFainted();
-
 
     //getters and setters of attributes
     public String getNickname() {

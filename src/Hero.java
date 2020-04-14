@@ -85,7 +85,6 @@ public abstract class Hero extends Characters{
     public abstract void unequip(Armory a);
     public abstract void equip(Weaponry a);
     public abstract void unequip(Weaponry a);
-    public abstract boolean checkFainted();
     public abstract String getBackpack();
     public abstract void addXP(int i);
 
@@ -424,7 +423,15 @@ public abstract class Hero extends Characters{
         double ran = Math.random();
         return(ran <= m.getDodge_chance());
     }
-
+    //see if hero gets knockedout
+    public boolean isFainted(){
+        if(this.HP <= 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     //function to see if spell usage is possible
     public boolean canUseSpell(Spell s){
@@ -455,10 +462,18 @@ public abstract class Hero extends Characters{
                 else{
                     this.HP -= (m.getDamage()-this.armor.getDamage_reduction());
                     System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
+                    if(isFainted()){
+                        System.out.println("Monster attack has knocked you out. Respawning at nexus!");
+                        board.teleportToNexus(this);
+                    }
                 }
             }else {
                 this.HP -= m.getDamage();
                 System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
+                if(isFainted()){
+                    System.out.println("Monster attack has knocked you out. Respawning at nexus!");
+                    board.teleportToNexus(this);
+                }
             }
         }
     }

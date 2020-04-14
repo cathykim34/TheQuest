@@ -15,14 +15,7 @@ public class Paladin extends Hero{
         return(ran <= this.probDodge);
     }
 
-    public boolean checkFainted(){
-        if(this.HP <= 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
 
     //get experience
     public int getExperience(){
