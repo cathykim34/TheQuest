@@ -111,25 +111,26 @@ public class BoardDriver {
                         }
 
                     } catch (Exception e) {
+                        System.out.println(e);
                         System.out.println("Invalid move, please try again.");
                     }
                 }while(makeMove);
                 if(enterQuit) {
                     break;
                 }
-                for (Monster m : monsters.getTeam()) {
-                    m.makeMove(board);
-                    if(QD.monstersWon(monsters)){
-                        System.out.println("Oh no a monster reached the your nexus! Game over.");
-                        enterQuit = true;
-                    }
-                }
-                MonsterTeam.increaseRound();
-                if (MonsterTeam.getRounds() == 8) {
-                    nextRound(monsters, team, board);
-                }
-                team.roundHealthIncrease();
             }
+            for (Monster m : monsters.getTeam()) {
+                m.makeMove(board);
+                if(QD.monstersWon(monsters)){
+                    System.out.println("Oh no a monster reached the your nexus! Game over.");
+                    enterQuit = true;
+                }
+            }
+            MonsterTeam.increaseRound();
+            if (MonsterTeam.getRounds() == 8) {
+                nextRound(monsters, team, board);
+            }
+            team.roundHealthIncrease();
         }while(!enterQuit);
         System.out.println("Thanks for playing the Quest, hope you a had a great time!");
     }

@@ -67,7 +67,7 @@ public abstract class Monster extends Characters{
     @Override
     //check if there is a hero nearby
     public boolean enemyNear(Board board){
-        if(board.boardArray[this.row-1][this.column].heroExists()){
+        if(board.boardArray[this.row+1][this.column].heroExists()){
             //get the hero and attack them
             board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
@@ -75,31 +75,35 @@ public abstract class Monster extends Characters{
         //if monster is in your cell
         else if(board.boardArray[this.row][this.column].heroExists()){
             //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
+            board.boardArray[this.row+1][this.column].getHero().getAttackedByMonster(this, board);
             return true;
         }
-        //if monster is diagonally in front
-        else if(board.boardArray[this.row-1][this.column+1].heroExists()){
-            //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
-            return true;
-        }
-        else if(board.boardArray[this.row-1][this.column-1].heroExists()){
-            //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
-            return true;
-        }
-        //if monster is next to you
-        else if(board.boardArray[this.row][this.column+1].heroExists()){
-            //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
-            return true;
-        }
-        //if monster is next to you
-        else if(board.boardArray[this.row][this.column-1].heroExists()){
-            //get the hero and attack them
-            board.boardArray[this.row-1][this.column].getHero().getAttackedByMonster(this, board);
-            return true;
+        else if(this.column != board.column-1) {
+            //if monster is diagonally in front
+            if (this.row != 0 && board.boardArray[this.row + 1][this.column + 1].heroExists()) {
+                //get the hero and attack them
+                board.boardArray[this.row + 1][this.column].getHero().getAttackedByMonster(this, board);
+                return true;
+            }
+
+            //if monster is next to you
+            else if (board.boardArray[this.row][this.column + 1].heroExists()) {
+                //get the hero and attack them
+                board.boardArray[this.row - 1][this.column].getHero().getAttackedByMonster(this, board);
+                return true;
+            }
+        }else if (this.column != 0) {
+            if (board.boardArray[this.row + 1][this.column - 1].heroExists()) {
+                //get the hero and attack them
+                board.boardArray[this.row + 1][this.column].getHero().getAttackedByMonster(this, board);
+                return true;
+            }
+            //if monster is next to you
+            else if (board.boardArray[this.row][this.column - 1].heroExists()) {
+                //get the hero and attack them
+                board.boardArray[this.row + 1][this.column].getHero().getAttackedByMonster(this, board);
+                return true;
+            }
         }
         return false;
     }

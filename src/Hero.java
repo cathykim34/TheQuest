@@ -86,35 +86,39 @@ public abstract class Hero extends Characters{
         else if(board.boardArray[this.row][this.column].monsterExists()){
             monsterNearby = true;
         }
-        //if monster is diagonally in front
-        else if(board.boardArray[this.row-1][this.column+1].monsterExists()){
-            monsterNearby = true;
+        else if(this.column != 0) {
+            if (board.boardArray[this.row - 1][this.column - 1].monsterExists()) {
+                monsterNearby = true;
+            }
+            //if monster is next to you
+            else if (board.boardArray[this.row][this.column - 1].monsterExists()) {
+                monsterNearby = true;
+            }
         }
-        else if(board.boardArray[this.row-1][this.column-1].monsterExists()){
-            monsterNearby = true;
+        else if(this.column != board.column-1) {
+            //if monster is next to you
+            if (board.boardArray[this.row][this.column + 1].monsterExists()) {
+                monsterNearby = true;
+            }
+            //if monster is diagonally in front
+            else if (board.boardArray[this.row - 1][this.column + 1].monsterExists()) {
+                monsterNearby = true;
+            }
         }
-        //if monster is next to you
-        else if(board.boardArray[this.row][this.column+1].monsterExists()){
-            monsterNearby = true;
-        }
-        //if monster is next to you
-        else if(board.boardArray[this.row][this.column-1].monsterExists()){
-            monsterNearby = true;
-        }
+
         return monsterNearby;
     }
 
     //returns whether that move is possible or not
     public boolean makeMove(Board board, String move) {
         boolean spotOpen = false;
-        int tempCol = this.getColumn();
-        int tempRow = this.getRow();
+        int tempCol = this.column;
+        int tempRow = this.row;
         if(move.equals("W")){
-            tempRow--;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow][tempCol];
+                BoardCell newCell = board.boardArray[tempRow--][tempCol];
                 if (!newCell.isFull() && !newCell.heroExists()) {
-                    BoardCell oldCell = board.boardArray[tempRow++][tempCol];
+                    BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
                     this.setRow(tempRow);
@@ -131,11 +135,10 @@ public abstract class Hero extends Characters{
         else if(move.equals("A")){
             //check for monsters nearby
             if(!enemyNear(board)) {
-                tempCol--;
                 if (!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)) {
-                    BoardCell newCell = board.boardArray[tempRow][tempCol];
+                    BoardCell newCell = board.boardArray[tempRow][tempCol--];
                     if (!newCell.isFull() && !newCell.heroExists()) {
-                        BoardCell oldCell = board.boardArray[tempRow++][tempCol];
+                        BoardCell oldCell = board.boardArray[tempRow][tempCol];
                         oldCell.removeCharacter(this);
                         newCell.addCharacter(this);
                         this.setColumn(tempCol);
@@ -150,11 +153,10 @@ public abstract class Hero extends Characters{
             }
         }
         else if(move.equals("S")){
-            tempRow++;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow][tempCol];
+                BoardCell newCell = board.boardArray[tempRow++][tempCol];
                 if (!newCell.isFull() && !newCell.heroExists()) {
-                    BoardCell oldCell = board.boardArray[tempRow++][tempCol];
+                    BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
                     this.setRow(tempRow);
@@ -169,11 +171,10 @@ public abstract class Hero extends Characters{
             }
         }
         else if (move.equals("D")){
-            tempCol++;
             if(!board.wallExists(tempCol, tempRow) && !board.boardEdge(tempCol, tempRow)){
-                BoardCell newCell = board.boardArray[tempRow][tempCol];
+                BoardCell newCell = board.boardArray[tempRow][tempCol++];
                 if (!newCell.isFull() && !newCell.heroExists()) {
-                    BoardCell oldCell = board.boardArray[tempRow++][tempCol];
+                    BoardCell oldCell = board.boardArray[tempRow][tempCol];
                     oldCell.removeCharacter(this);
                     newCell.addCharacter(this);
                     this.setColumn(tempCol);

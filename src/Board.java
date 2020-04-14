@@ -129,7 +129,7 @@ public class Board {
         for (int i = 0; i < cellContents.length; i++) {
             if (cellContents[i] != null) {
                 // If there's a character in this cell, we want its nickname to display
-                result[i] = cellContents[i].nickname;
+                result[i] = cellContents[i].getNickname();
             } else {
                 // No character means nothing to display
                 result[i] = "  ";
@@ -177,7 +177,7 @@ public class Board {
                 Characters[] contents = cell.getContents();
                 for (Characters c:contents){
                     // Find the hero in the destination lane
-                    if (c.nickname.indexOf("H") != -1) {
+                    if (c.getNickname().indexOf("h") != -1) {
                         // The nickname contains H, so it is a fellow hero
 
                         // We need the neighboring cell bc two heroes cannot be in the same cell

@@ -50,18 +50,6 @@ public class HeroTeam extends Team {
         }
     }
 
-    //helper function for first assigning positions at beginning of game
-    private void assignPosition(Board board){
-        int j = -3;
-        for(int i = 0; i<this.heroes.size(); i++) {
-            this.heroes.get(i).setLane(board.lanes[i]);
-            this.heroes.get(i).setNexus(board.lanes[i]);
-            this.heroes.get(i).setRow(board.row-1);
-            this.heroes.get(i).setColumn(j+3);
-            this.heroes.get(i).setNickname("h" + (i+1));
-        }
-    }
-
     //choose heroes
     public void addHeroes(Board board) {
         Hero.allHeroTypes();
@@ -114,6 +102,19 @@ public class HeroTeam extends Team {
         System.out.println("Congratulations your team has been created!");
         for (Hero h : this.heroes) {
             System.out.println(h);
+        }
+    }
+    //helper function for first assigning positions at beginning of game
+    private void assignPosition(Board board){
+        int j = -3;
+        for(int i = 0; i<this.heroes.size(); i++) {
+            j += 3;
+            this.heroes.get(i).setLane(board.lanes[i]);
+            this.heroes.get(i).setNexus(board.lanes[i]);
+            this.heroes.get(i).setRow(board.row-1);
+            this.heroes.get(i).setColumn(j);
+            this.heroes.get(i).setNickname("h" + (i+1));
+            board.boardArray[this.heroes.get(i).getRow()][this.heroes.get(i).getColumn()].addCharacter(this.heroes.get(i));
         }
     }
 }

@@ -88,8 +88,11 @@ public class BoardCell {
     //take out a character from cell
     public void removeCharacter(Characters character) {
         for (int i = 0; i < this.contents.length; i++) {
-            if (this.contents[i].name.equals(character.name)) {
-                this.contents[i] = null;
+            if (this.contents[i] != null) {
+                if (this.contents[i].getName().equals(character.getName())) {
+                    this.contents[i] = null;
+                    return;
+                }
             }
         }
     }
@@ -99,6 +102,7 @@ public class BoardCell {
         for (int i = 0; i < this.contents.length; i++) {
             if (this.contents[i] == null) {
                 this.contents[i] = character;
+                return;
             }
         }
     }
@@ -112,16 +116,6 @@ public class BoardCell {
         }
         return true;
 
-    }
-
-    //checks if cell has a hero in it already
-    public boolean containsHero() {
-        for (int i = 0; i < this.contents.length; i++) {
-            if (this.contents[i] instanceof Hero) {
-                return true;
-            }
-        }
-        return false;
     }
 
     //checks if cell is empty
@@ -176,18 +170,15 @@ public class BoardCell {
 
     //checks if there is hero nearby
     public boolean heroExists(){
-        boolean doesExist = false;
         if(isEmpty()){
-            return doesExist;
+            return false;
         }
-        for(int i = 0; i < this.contents.length;i++){
-            if(this.contents[i] != null){
-                if(!this.contents[i].getType().equals("Monster")){
-                    return true;
-                }
+        for (int i = 0; i < this.contents.length; i++) {
+            if (this.contents[i] instanceof Hero) {
+                return true;
             }
         }
-        return doesExist;
+        return false;
     }
 
     public void cellAction(Hero hero) {
@@ -228,16 +219,22 @@ public class BoardCell {
         System.out.println(hero.getName() + "'s health is restored!");
 
         Scanner input = new Scanner(System.in);
-        System.out.println("Would you like to visit the market? [y/n]: ");
-        String choice = input.next();
-        choice = choice.toUpperCase();
-        if (choice.equals("y")) {
-            Weaponry.existingTypes();
-            Armory.existingTypes();
-            Market market = new Market();
-            MarketDriver driver = new MarketDriver();
-            driver.play(market, hero);
-        }
+        boolean invalid = true;
+        do {
+            System.out.println("Would you like to visit the market? [y/n]: ");
+            String choice = input.next();
+            choice = choice.toUpperCase();
+            if (choice.equals("Y")) {
+                Weaponry.existingTypes();
+                Armory.existingTypes();
+                Market market = new Market();
+                MarketDriver driver = new MarketDriver();
+                driver.play(market, hero);
+                invalid = false;
+            } else if (choice.equals("N")){
+                invalid = false;
+            }
+        }while(invalid);
     }
 
 }

@@ -116,6 +116,7 @@ public class MonsterTeam extends Team {
         d.setLane(nexus);
         d.setRow(0);
         d.setColumn(column);
+        d.setNickname("M!");
         return d;
     }
 
@@ -126,6 +127,7 @@ public class MonsterTeam extends Team {
         e.setLane(nexus);
         e.setRow(0);
         e.setColumn(column);
+        e.setNickname("M!");
         return e;
     }
 
@@ -136,6 +138,7 @@ public class MonsterTeam extends Team {
         s.setLane(nexus);
         s.setRow(0);
         s.setColumn(column);
+        s.setNickname("M!");
         return s;
     }
 
