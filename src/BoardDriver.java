@@ -16,21 +16,125 @@ public class BoardDriver {
         return board;
     }
 
+    //enter board game to start playing
+    public void enterTheWorld(HeroTeam team, Board board, QuestDriver QD){
 
-    public void takePotion(Hero h){
-        if(h.getBP().getPotions().isEmpty()){
-            System.out.println("Currently do not own any potions!");
-        }
-        else {
-            FightDriver FD = new FightDriver();
-            FD.usePotion(h);
-        }
+        Scanner input = new Scanner(System.in);
+        //prepare the market items
+        QD.setUpMarket();
+        MonsterTeam monsters = QD.createMonsterTeam(team, board);
+        boolean enterQuit = false;
+        do{
+            System.out.println("To move around the board, enter W to move up, A to move left, S to move down and D to move right");
+            System.out.println("To quit the game, enter Q");
+            System.out.println("To show information about your heroes, enter I");
+            System.out.println("To make changes armor, weapon, take a potion or cast a spell, press C");
+            System.out.println("To teleport to your team's nexus, enter B");
+            System.out.println("To teleport to another lane, enter T");
+            System.out.println(board);
+            System.out.println("(Tiles with I's around them are walls, so users cannot move there.");
+            for(Hero hero: team.getTeam()) {
+                boolean makeMove = true;
+                do {
+                    try {
+                        System.out.println("What would you like " + hero.getName() + " to do?");
+                        String in = input.next();
+                        String currentInput = in.toUpperCase();
+                        if (currentInput.equals("Q")) {
+                            System.out.println("Quitting game...");
+                            makeMove= false;
+                            enterQuit = true;
+                        } else if (currentInput.equals("I")) {
+                            System.out.println(hero);
 
+                        } else if (currentInput.equals("C")) {
+                            String response = QD.giveOptions();
+                            if (response.equals("P")) {
+                                if(hero.potionsExist()){
+                                    hero.takePotion();
+                                    makeMove= false;
+                                }else{
+                                    System.out.println("Currently do not own any potions! Please try another action.");
+                                }
+                            }
+                            if (response.equals("S")) {
+//                                if(hero.useSpell()){
+//                                    makeMove = false;
+//                                }
+                            } else if (response.equals("C")) {
+                                if (hero.changeNotPossible()) {
+                                    System.out.println("Currently do not own any armor or weapons.");
+                                } else {
+                                    change(hero);
+                                    makeMove= false;
+                                }
+                            }
+                        } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
+                            boolean possible = hero.makeMove(board, currentInput);
+                            if (!possible) {
+                                System.out.println("Oops! This move is not possible, please try again.");
+                            }
+                            else{
+                                makeMove= false;
+                            }
+                        } else if (currentInput.equals("B")) {
+                            Lane nexusLane = hero.getNexus();
+                            BoardCell[][] cells = nexusLane.getCells();
+                            BoardCell nexus = cells[cells.length - 1][0];
+                            int row = nexus.getRow();
+                            int col = nexus.getCol();
+                            // Get nexus cell for the given lane
+                            BoardCell newCell = board.boardArray[row][col];
+                            if (!newCell.isFull()) {
+                                // Put hero in cell since it is not full
+                                newCell.addCharacter(hero);
+                                hero.setLane(nexusLane);
+                                hero.setRow(row);
+                                hero.setColumn(col);
+                                newCell.cellAction(hero);
+                            } else {
+                                System.out.println("Your Nexus is occupied! Cannot go there now");
+                            }
+                        } else if (currentInput.equals("T")) {
+                            System.out.println("Enter the lane number that you would like to teleport to [0-2]:");
+                            int laneNum = input.nextInt();
+                            if (laneNum > board.lanes.length - 1 || laneNum < 0) {
+                                System.out.println("Lane does not exist");
+                            } else {
+                                board.teleport(hero, laneNum);
+                            }
+                        } else {
+                            System.out.println("Invalid input, please try again.");
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println("Invalid move, please try again.");
+                    }
+                }while(makeMove);
+                for (Monster m : monsters.getTeam()) {
+                    m.makeMove(board);
+                    if(QD.monstersWon(monsters)){
+                        System.out.println("Oh no a monster reached the your nexus! Game over.");
+                        enterQuit = true;
+                    }
+                }
+                MonsterTeam.increaseRound();
+                if (MonsterTeam.getRounds() == 8) {
+                    nextRound(monsters, team, board);
+                }
+                team.roundHealthIncrease();
+            }
+        }while(!enterQuit);
+        System.out.println("Thanks for playing the Quest, hope you a had a great time!");
     }
 
+    //resets round counter, spawns new monsters
+    public void nextRound(MonsterTeam monsters, HeroTeam team, Board board){
+        MonsterTeam.setRounds(1);
+        monsters.addMonsters(board, team);
+    }
     public void change(Hero h){
-        FightDriver FD = new FightDriver();
-        FD.changeWorA(h);
+        h.changeWorA();
         Scanner input = new Scanner(System.in);
         boolean keepChanging = true;
         do{
@@ -38,7 +142,7 @@ public class BoardDriver {
             try{
                 String in = input.next();
                 if(in.toUpperCase().equals("Y")){
-                    FD.changeWorA(h);
+                    h.changeWorA();
                 }
                 else if (in.toUpperCase().equals("N")){
                     keepChanging = false;
@@ -50,102 +154,5 @@ public class BoardDriver {
                 System.out.println("Invalid, please try again");
             }
         }while(keepChanging);
-    }
-
-    //enter board game to start playing
-    public void enterTheWorld(HeroTeam team, Board board, QuestDriver QD){
-
-        Scanner input = new Scanner(System.in);
-        //prepare the market items
-        QD.setUpMarket();
-        MonsterTeam monsters = QD.createMonsterTeam(team);
-        boolean enterQuit = false;
-        do{
-            System.out.println("To move around the board, enter W to move up, A to move left, S to move down and D to move right");
-            System.out.println("To quit the game, enter Q");
-            System.out.println("To show information about your heroes and perform changes on weapons/armories or take a potion, enter I");
-            System.out.println("To teleport to your team's nexus, enter B");
-            System.out.println("To teleport to another lane, enter T");
-            System.out.println(board);
-            System.out.println("(Tiles with I's around them are walls, so users cannot move there.");
-            for(Hero hero: team.getTeam()) {
-                try {
-                    System.out.println("What would you like " + hero.getName() + " to do?");
-                    String in = input.next();
-                    String currentInput = in.toUpperCase();
-                    if (currentInput.equals("Q")) {
-                        System.out.println("Quitting game...");
-                        enterQuit = true;
-                    } else if (currentInput.equals("I")) {
-                        System.out.println(hero);
-//                        String response = QD.giveOptions();
-//                        if(response.equals("P")){
-//                            takePotion(hero);
-//                        }
-//                        else if(response.equals("C")){
-//                            if(hero.changeNotPossible()){
-//                                System.out.println("Currently do not own any armor or weapons.");
-//                            }
-//                            else{
-//                                change(hero);
-//                            }
-//                        }
-
-                    } else if (currentInput.equals("W") || currentInput.equals("A") || currentInput.equals("S") || currentInput.equals("D")) {
-                        boolean possible = board.makeMove(hero, currentInput);
-                        if (!possible) {
-                            System.out.println("Oops! This move is not possible, please try again.");
-                        }
-                    } else if (currentInput.equals("B")) {
-                        Lane nexusLane = hero.getNexus();
-                        BoardCell[][] cells = nexusLane.getCells();
-                        BoardCell nexus = cells[cells.length-1][0];
-                        int row = nexus.getRow();
-                        int col = nexus.getCol();
-                        // Get nexus cell for the given lane
-                        BoardCell newCell = board.boardArray[row][col];
-                        if (!newCell.isFull()) {
-                            // Put hero in cell since it is not full
-                            newCell.addCharacter(hero);
-                            hero.setLane(nexusLane);
-                            hero.setRow(row);
-                            hero.setColumn(col);
-                            newCell.cellAction(hero);
-                        } else {
-                            System.out.println("Your Nexus is occupied! Cannot go there now");
-                        }
-                    } else if (currentInput.equals("T")) {
-                        System.out.println("Enter the lane number that you would like to teleport to [0-2]:");
-                        int laneNum = input.nextInt();
-                        if (laneNum > board.lanes.length-1 || laneNum < 0 ) {
-                            System.out.println("Lane does not exist");
-                        } else {
-                            board.teleport(hero, laneNum);
-                        }
-                    } else {
-                        System.out.println("Invalid input, please try again.");
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("Invalid move, please try again.");
-                }
-
-                for (Monster m : monsters.getTeam()) {
-                    m.makeMove(board);
-                }
-                MonsterTeam.increaseRound();
-                if (MonsterTeam.getRounds() == 8) {
-                    nextRound(monsters, team);
-                }
-                team.roundHealthIncrease();
-            }
-        }while(!enterQuit);
-        System.out.println("Thanks for playing the Quest, hope you a had a great time!");
-    }
-
-    //resets round counter, spawns new monsters
-    public void nextRound(MonsterTeam monsters, HeroTeam team){
-        MonsterTeam.setRounds(1);
-        monsters.addMonsters(team);
     }
 }

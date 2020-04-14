@@ -53,19 +53,20 @@ public class MonsterTeam extends Team {
      }
 
     //randomly create group of monsters of appropriate level
-    public void addMonsters(HeroTeam heroTeam) {
+    public void addMonsters(Board board, HeroTeam heroTeam) {
         ArrayList<Monster> all = Monster.allPossible();
         ArrayList<Monster> monsterPossibilities = new ArrayList<>();
         for(int i = 0; i < heroTeam.numberHeroes; i++){
             Lane nexus = heroTeam.heroes.get(i).getNexus();
             int level = heroTeam.heroes.get(i).getLevel();
+            int column = heroTeam.heroes.get(i).getColumn();
             if(monsterLevelExists(level)) {
                 monsterPossibilities = potentialMonsters(level, all);
             }
             else{
                 monsterPossibilities = potentialMonsters(Monster.getMaxLevel(), all);
             }
-            this.monsters.add(chooseMonsters(monsterPossibilities, nexus));
+            this.monsters.add(chooseMonsters(board, monsterPossibilities, nexus, column));
         }
     }
 
@@ -86,46 +87,54 @@ public class MonsterTeam extends Team {
     }
 
     //choose monster randomly
-    protected Monster chooseMonsters(ArrayList<Monster> m, Lane nexus){
+    protected Monster chooseMonsters(Board board, ArrayList<Monster> m, Lane nexus, int column){
         Collections.shuffle(m);
-        return newCopy(m.get(0), nexus);
+        Monster mon = newCopy(m.get(0), nexus, column);
+        board.boardArray[mon.getRow()][mon.getColumn()].addCharacter(mon);
+        return mon;
     }
 
     //returns the new copy of chosen monster
-    protected <T extends Monster>Monster newCopy(Monster m, Lane nexus){
+    protected <T extends Monster>Monster newCopy(Monster m, Lane nexus, int column){
         String type = m.getType();
         if(type.equals("Exoskeleton")){
-            return newInstanceExoskeleton(m, nexus);
+            return newInstanceExoskeleton(m, nexus, column);
         }
         else if(type.equals("Spirit")){
-            return newInstanceSpirit(m, nexus);
+            return newInstanceSpirit(m, nexus,column);
         }
         else{
-            return newInstanceDragon(m, nexus);
+            return newInstanceDragon(m, nexus,column);
         }
     }
 
     //create new instance of Dragon
-    private Dragon newInstanceDragon(Monster m, Lane nexus){
+    private Dragon newInstanceDragon(Monster m, Lane nexus, int column){
         Dragon d = new Dragon(m.getName(), m.getLevel(), m.getDamage(), m.getDefense(), m.getDodge_chance());
         d.setNexus(nexus);
         d.setLane(nexus);
+        d.setRow(0);
+        d.setColumn(column);
         return d;
     }
 
     //create new instance of Exoskeletons
-    private Exoskeleton newInstanceExoskeleton(Monster m, Lane nexus){
+    private Exoskeleton newInstanceExoskeleton(Monster m, Lane nexus, int column){
         Exoskeleton e = new Exoskeleton(m.getName(), m.getLevel(), m.getDamage(), m.getDefense(), m.getDodge_chance());
         e.setNexus(nexus);
         e.setLane(nexus);
+        e.setRow(0);
+        e.setColumn(column);
         return e;
     }
 
     //create new instance of spirit
-    private Spirit newInstanceSpirit(Monster m, Lane nexus){
+    private Spirit newInstanceSpirit(Monster m, Lane nexus, int column){
         Spirit s = new Spirit(m.getName(), m.getLevel(), m.getDamage(), m.getDefense(), m.getDodge_chance());
         s.setNexus(nexus);
         s.setLane(nexus);
+        s.setRow(0);
+        s.setColumn(column);
         return s;
     }
 

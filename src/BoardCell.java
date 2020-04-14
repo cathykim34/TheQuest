@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class BoardCell {
-    private String type;
-    private int capacity; // How many players can be in a cell at a given time
-    private Characters[] contents; // Characters in the cell
+    protected String type;
+    protected int capacity; // How many players can be in a cell at a given time
+    protected Characters[] contents; // Characters in the cell
 
     public int getRow() {
         return row;
@@ -124,6 +124,50 @@ public class BoardCell {
         return true;
     }
 
+    //return hero
+    public Characters getHero(){
+        for(int i = 0; i<this.contents.length; i++){
+            if(this.contents[i] != null){
+                if(!this.contents[i].getType().equals("Monster")){
+                    return this.contents[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    //checks if there is a monster in the cell
+    public boolean monsterExists(){
+        boolean doesExist = false;
+        if(isEmpty()){
+            return doesExist;
+        }
+        for(int i = 0; i < this.contents.length; i++){
+            if(this.contents[i] != null){
+                if(this.contents[i].getType().equals("Monster")){
+                    return true;
+                }
+            }
+        }
+        return doesExist;
+    }
+
+    //checks if there is hero nearby
+    public boolean heroExists(){
+        boolean doesExist = false;
+        if(isEmpty()){
+            return doesExist;
+        }
+        for(int i = 0; i < this.contents.length;i++){
+            if(this.contents[i] != null){
+                if(!this.contents[i].getType().equals("Monster")){
+                    return true;
+                }
+            }
+        }
+        return doesExist;
+    }
+
     public void cellAction(Hero hero) {
         if (this.type.equals("B")) {
             // Bush cells
@@ -151,6 +195,10 @@ public class BoardCell {
                 nexusCellAction(hero);
             }
         }
+    }
+
+    public boolean reachedHeroNexus(){
+        return this.isHeroNexus;
     }
 
     public void nexusCellAction(Hero hero) {

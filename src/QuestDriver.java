@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 public class QuestDriver{
 
@@ -40,10 +41,10 @@ public class QuestDriver{
     }
 
     //creates the monster team depending on the heroes
-    public MonsterTeam createMonsterTeam(HeroTeam heroes){
+    public MonsterTeam createMonsterTeam(HeroTeam heroes, Board board){
         System.out.println("Meet your opponents!");
         MonsterTeam m = new MonsterTeam();
-        m.addMonsters(heroes);
+        m.addMonsters(board, heroes);
         for(Characters monster : m.getTeam()){
             System.out.println(monster);
         }
@@ -63,6 +64,16 @@ public class QuestDriver{
             FightDriver FD = new FightDriver();
             FD.play();
         }
+    }
+
+    //checks if monsters won
+    public boolean monstersWon(MonsterTeam monsters){
+        for(Monster m: monsters.getTeam()){
+            if(m.isReachedNexus()){
+                return true;
+            }
+        }
+        return false;
     }
 
     //gives user choice to take potion or put on armory/weapon
