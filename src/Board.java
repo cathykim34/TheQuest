@@ -210,7 +210,7 @@ public class Board {
     public BoardCell getNeighboringCell(BoardCell cell){
         int row = cell.getRow();
         int col = cell.getCol();
-        if (!boardEdge(col-1, row) && !wallExists(col-1, row)) {
+        if (col != 0 && !boardEdge(col-1, row) && !wallExists(col-1, row)) {
             BoardCell leftCell = this.boardArray[row][col-1];
             if (!leftCell.heroExists()) {
                 return leftCell;
