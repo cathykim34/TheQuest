@@ -94,9 +94,6 @@ public class Warrior extends Hero{
         this.weapon = null;
     }
 
-    public void revive(){
-        this.HP = (this.level*100)/2;
-    }
 
     public double getMana(){
         return this.mana;

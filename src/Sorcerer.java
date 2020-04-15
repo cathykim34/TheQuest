@@ -34,9 +34,7 @@ public class Sorcerer extends Hero{
     public int getExperience(){
         return this.experience;
     }
-    public void revive(){
-        this.HP = (this.level*100)/2;
-    }
+
 
     public double getMana(){
         return this.mana;

@@ -77,7 +77,6 @@ public abstract class Hero extends Characters{
     public abstract void setAgility(int i);
     public abstract void levelUp();
     public abstract String getName();
-    public abstract void revive();
     public abstract double getMana();
     public abstract int getLevel();
     public abstract boolean armorOn();
@@ -121,6 +120,11 @@ public abstract class Hero extends Characters{
         }
 
         return monsterNearby;
+    }
+
+    //when back on nexus, restore health
+    public void revive(){
+        this.HP = (this.level*100);
     }
 
     //returns whether that move is possible or not

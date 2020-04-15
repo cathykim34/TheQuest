@@ -22,9 +22,6 @@ public class Paladin extends Hero{
         return this.experience;
     }
 
-    public void revive(){
-        this.HP = (this.level*100)/2;
-    }
     //add XP
     public void addXP(int i){
         this.experience += i;
