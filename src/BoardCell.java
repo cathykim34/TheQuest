@@ -190,7 +190,7 @@ public class BoardCell {
                 System.out.println("Thank you for playing!");
                 System.exit(0);
             } else {
-                nexusCellAction(hero);
+                nexusCellAction(hero, false);
             }
         }
     }
@@ -199,9 +199,11 @@ public class BoardCell {
         return this.isHeroNexus;
     }
 
-    public void nexusCellAction(Hero hero) {
-        hero.revive();
-        System.out.println(hero.getName() + "'s health is restored!");
+    public void nexusCellAction(Hero hero, boolean needsRevive) {
+        if (needsRevive) {
+            hero.revive();
+            System.out.println(hero.getName() + "'s health is restored!");
+        }
 
         Scanner input = new Scanner(System.in);
         boolean invalid = true;

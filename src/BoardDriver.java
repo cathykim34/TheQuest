@@ -96,7 +96,7 @@ public class BoardDriver {
                             }
                         } else if (currentInput.equals("B")) {
                             // Teleport to own nexus
-                            board.teleportToNexus(hero);
+                            board.teleportToNexus(hero, false);
                             makeMove= false;
                         } else if (currentInput.equals("T")) {
                             System.out.println("Enter the lane number that you would like to teleport to [0-2]:");

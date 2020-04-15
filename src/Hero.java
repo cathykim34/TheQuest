@@ -468,7 +468,7 @@ public abstract class Hero extends Characters{
                     System.out.println(this.name + "received " + (m.getDamage()-this.armor.getDamage_reduction()) + "damage from "+ m.getName());
                     if(isFainted()){
                         System.out.println("Monster attack has knocked you out. Respawning at nexus!");
-                        board.teleportToNexus(this);
+                        board.teleportToNexus(this, true);
                     }
                 }
             }else {
@@ -476,7 +476,7 @@ public abstract class Hero extends Characters{
                 System.out.println(this.name + " received " + m.getDamage() + " damage from " + m.getName());
                 if(isFainted()){
                     System.out.println("Monster attack has knocked you out. Respawning at nexus!");
-                    board.teleportToNexus(this);
+                    board.teleportToNexus(this, true);
                 }
             }
         }
@@ -522,7 +522,7 @@ public abstract class Hero extends Characters{
     public void respawn(Board board) {
         // This function also takes care of the cell's action,
         // which is reviving and opening the market
-        board.teleportToNexus(this);
+        board.teleportToNexus(this, true);
     }
 
 

@@ -215,7 +215,7 @@ public class Board {
         return null;
     }
 
-    public void teleportToNexus(Hero hero) {
+    public void teleportToNexus(Hero hero, boolean needsRevive) {
         Lane nexusLane = hero.getNexus();
         BoardCell[][] cells = nexusLane.getCells();
         BoardCell nexus = cells[cells.length-1][0];
@@ -233,7 +233,7 @@ public class Board {
             hero.setLane(nexusLane);
             hero.setRow(row);
             hero.setColumn(col);
-            newCell.cellAction(hero);
+            newCell.nexusCellAction(hero, needsRevive);
         } else {
             System.out.println("Your Nexus is occupied! Cannot go there now");
         }
