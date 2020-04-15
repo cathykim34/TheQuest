@@ -161,7 +161,8 @@ public class Board {
             if (success){
                 System.out.println("You have teleported!");
             } else{
-                System.out.println("Cannot teleport to fellow hero; space full");
+                System.out.println("Cannot teleport to fellow hero");
+                System.out.println("Try teleporting to a lane with only one other hero");
             }
         } else {
             System.out.println("Cannot teleport to current lane");
