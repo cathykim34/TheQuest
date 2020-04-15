@@ -104,8 +104,8 @@ public class BoardDriver {
                             if (laneNum > board.lanes.length - 1 || laneNum < 0) {
                                 System.out.println("Lane does not exist");
                             } else {
-                                board.teleport(hero, laneNum);
-                                makeMove= false;
+                                boolean success = board.teleport(hero, laneNum);
+                                makeMove = !success;
                             }
                         } else {
                             System.out.println("Invalid input, please try again.");

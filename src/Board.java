@@ -153,19 +153,22 @@ public class Board {
     }
     
 
-    public void teleport(Hero hero, int newLane) {
+    public boolean teleport(Hero hero, int newLane) {
         int curLane = hero.getLane().getLaneNumber();
         if (curLane != newLane) {
             Lane lane = this.lanes[newLane];
             boolean success = teleportToHero(lane, hero);
             if (success){
                 System.out.println("You have teleported!");
+                return true;
             } else{
                 System.out.println("Cannot teleport to fellow hero");
                 System.out.println("Try teleporting to a lane with only one other hero");
+                return false;
             }
         } else {
             System.out.println("Cannot teleport to current lane");
+            return false;
         }
     }
 
