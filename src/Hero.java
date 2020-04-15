@@ -16,10 +16,6 @@ public abstract class Hero extends Characters{
     protected Armory armor;
     protected Backpack backpack;
     protected String favoredSkills;
-    protected int row;
-    protected int column;
-    protected Lane lane;
-    protected Lane nexus;
     protected double probDodge;
     protected int experience;
 

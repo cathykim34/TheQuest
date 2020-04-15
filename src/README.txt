@@ -2,8 +2,6 @@ Group #20
 Sarah Rieger (U47427637)
 Catherine Kim (U51788489)
 
-"NOTE THAT MONSTERS CANNOT WIN UNLESS A HERO TELEPORTS"
-
 Compilation Instructions:
 javac GameDriver.java
 java GameDriver
@@ -18,7 +16,7 @@ Armory: class that has the general attributes and constructor that any specific 
 	-Speed_Boots
 
 Characters: Abstract class that provides hierarchy to the heroes and monsters
-Monster: Abstract class to Dragons, Exoskeletons, and spirits
+Monster: Abstract class to Dragons, Exoskeletons, and spirits (noted that in gameplay, monsters cannot win unless hero teleports out of their lane)
 Dragons: class that has the general attributes and constructor that any specific dragon characters will invoke using the keyword super
 	Subclasses that allow for scalability should specific dragon characters have other effects/powers in updated versions of the game:
 	-Desghidorrah
@@ -57,7 +55,7 @@ Spirits: superclass that has the general attributes and constructor that any spe
 	-Taltecuhtli
 
 Hero: Abstract class to Paladins, Warriors and Sorcerers
-*set the max level for any character to be level 10
+
 Paladins: class that has the general attributes and constructor that any specific paladin characters will invoke using the keyword super
 	Subclasses that allow for scalability should specific dragon characters have other effects/powers in updated versions of the game:
 	-Solonor_Thelandira
@@ -75,6 +73,8 @@ Warrior: class that has the general attributes and constructor that any specific
 	-Mehanine_Sonnbow
 	-Muamman_Duathall
 	-Flandal_Steelskin
+
+Items: abstract class to spells, potions, weapons and armory (items that can be stored in our backpack)
 
 Spells: abstract class to fire, ice, and lightning spells, important to note that spells are one-use only
 FireSpell: superclass that has general attributes and constructor that any specific fire spells will invoke using the keyword super
@@ -113,15 +113,15 @@ Weaponry: superclass that has general attributes and constructor that any specif
 	-Shield
 	-TSwords
 	-Dagger
-Team: class to choose heroes that user will use, assuming that only one instance of each character is possible
+Team: superclass to HeroTeam and MonsterTeam
+
+Hero Team: team of user chosen heroes and appropriate functions to create, perform actions that are meant for entire team (e.g. health increase to heroes every round)
+
+Monster Team: team of randomly generated monsters (spawning 3 every 8 rounds)
 
 BackPack: to keep current list of items that heroes have (e.g. potions, spells, weapons and armory)
 
 Buyable Interface: keeps a running list of items that can be bought, for objects that can be sold and whether an object can be bought
-
-Fight interface: ensuring heroes have necessary methods for the fight
-
-Fight driver: runs the actual fight (the order is randomly given to heroes and one at a time will fight the monsters until the hero faints or all the monsters are killed) assumed that for a turn hero can only change armor or weapon
 
 Quest driver: initializes a lot of pre game items (like heroes, etc).
 
@@ -129,4 +129,7 @@ Game Driver: simply starting point to lead to other drivers
 
 Board Driver: deals with board movements (note: movement like hitting the wall is like bouncing back to the square you are currently in which means you get a chance at fighting in a common tile or going into the market, assume b goes back to their starting nexus only)
 Board class: physical board
-Board cell: tells us what kind of tile (market, common, etc)
+Board cell: tells us what kind of tile (market, common, etc) and allows actions such as knowing what is currently in cells (characters) and actions (special cell types give powers)
+Lanes: physical lanes of board (top, mid, bot though numbered in this implementation)
+
+
