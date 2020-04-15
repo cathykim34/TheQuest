@@ -82,6 +82,7 @@ public class BoardCell {
         }
     }
 
+
     //move a character into this cell
     public void addCharacter(Characters character) {
         for (int i = 0; i < this.contents.length; i++) {

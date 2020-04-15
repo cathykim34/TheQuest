@@ -175,19 +175,30 @@ public class Board {
             for (int j = 0; j < cells[0].length; j++) {
                 BoardCell cell = cells[i][j];
                 Characters[] contents = cell.getContents();
-                for (Characters c:contents){
-                    // Find the hero in the destination lane
-                    if (c.getNickname().indexOf("h") != -1) {
-                        // The nickname contains H, so it is a fellow hero
+                if (contents[0] != null) {
+                    for (Characters c : contents) {
+                        // Find the hero in the destination lane
+                        if (c != null) {
+                            if (c.getNickname().indexOf("h") != -1) {
+                                // The nickname contains H, so it is a fellow hero
 
-                        // We need the neighboring cell bc two heroes cannot be in the same cell
-                        BoardCell destination = getNeighboringCell(cell);
-                        if(destination != null){
-                            // We move the character to the new cell
-                            destination.addCharacter(hero);
-                            hero.setLane(lane);
-                            destination.cellAction(hero);
-                            return true;
+                                // We need the neighboring cell bc two heroes cannot be in the same cell
+                                BoardCell destination = getNeighboringCell(cell);
+                                if (destination != null) {
+                                    // Remove character from their old cell
+                                    int oldRow = hero.getRow();
+                                    int oldCol = hero.getColumn();
+                                    BoardCell oldCell = this.boardArray[oldRow][oldCol];
+                                    oldCell.removeCharacter(hero);
+                                    // We move the character to the new cell
+                                    destination.addCharacter(hero);
+                                    hero.setLane(lane);
+                                    hero.setRow(destination.getRow());
+                                    hero.setColumn(destination.getCol());
+                                    destination.cellAction(hero);
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
@@ -199,13 +210,13 @@ public class Board {
     public BoardCell getNeighboringCell(BoardCell cell){
         int row = cell.getRow();
         int col = cell.getCol();
-        if (!boardEdge(col-1, row) && wallExists(col-1, row)) {
+        if (!boardEdge(col-1, row) && !wallExists(col-1, row)) {
             BoardCell leftCell = this.boardArray[row][col-1];
             if (!leftCell.heroExists()) {
                 return leftCell;
             }
         }
-        if (!boardEdge(col+1, row) && wallExists(col+1, row)) {
+        if (!boardEdge(col+1, row) && !wallExists(col+1, row)) {
             BoardCell rightCell = this.boardArray[row][col+1];
             if (!rightCell.heroExists()) {
                 return rightCell;
