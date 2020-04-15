@@ -54,7 +54,7 @@ Spirits: superclass that has the general attributes and constructor that any spe
 	-Rakkshasass
 	-Taltecuhtli
 
-Hero: Abstract class to Paladins, Warriors and Sorcerers (assumed that heroes can only teleport to lanes that where there is another hero or back to their own nexus)
+Hero: Abstract class to Paladins, Warriors and Sorcerers (assumed that heroes can only teleport to lanes that where there is exactly one hero or back to their own nexus)
 
 Paladins: class that has the general attributes and constructor that any specific paladin characters will invoke using the keyword super
 	Subclasses that allow for scalability should specific dragon characters have other effects/powers in updated versions of the game:
