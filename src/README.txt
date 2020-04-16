@@ -7,7 +7,7 @@ javac GameDriver.java
 java GameDriver
 
 Usability of each class:
-Armory: class that has the general attributes and constructor that any specific armory pieces will invoke using the keyword super (assumed that characters can only use one piece of armory at a time)
+Armory: class that has the general attributes iand constructor that any specific armory pieces will invoke using the keyword super (assumed that characters can only use one piece of armory at a time)
 	Subclasses that allow for scalability should specific armor pieces have other effects in updated versions of the game:
 	-Breastplate (duplicate ignored in provided file)
 	-Full_Body_Armor
@@ -54,7 +54,7 @@ Spirits: superclass that has the general attributes and constructor that any spe
 	-Rakkshasass
 	-Taltecuhtli
 
-Hero: Abstract class to Paladins, Warriors and Sorcerers (assumed that heroes can only teleport to lanes that where there is another hero or back to their own nexus)
+Hero: Abstract class to Paladins, Warriors and Sorcerers (assumed that heroes can only teleport to lanes that where there is a cell open next to another hero or back to their own nexus)
 
 Paladins: class that has the general attributes and constructor that any specific paladin characters will invoke using the keyword super
 	Subclasses that allow for scalability should specific dragon characters have other effects/powers in updated versions of the game:
