@@ -3,19 +3,14 @@ import java.util.ArrayList;
 
 public class Weaponry extends Item implements Buyable{
     protected String type = "Weaponry";
-    protected String name;
-    protected int cost;
-    protected int required_level;
     protected int damage;
     protected int requiredHands;
-    protected static ArrayList<Weaponry> all = new ArrayList<>();
     protected boolean currently_using;
+    protected static ArrayList<Weaponry> all = new ArrayList<>();
 
 
-    public Weaponry(String name, int cost, int level, int damage, int hands){
-        this.name = name;
-        this.cost = cost;
-        this.required_level = level;
+    public Weaponry(String name, int cost, int required_level, int damage, int hands){
+        super(name,cost, required_level);
         this.damage = damage;
         this.requiredHands = hands;
         this.currently_using = false;

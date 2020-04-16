@@ -2,12 +2,15 @@ import java.util.*;
 
 public abstract class Spell extends Item implements Buyable {
     protected String type = "Spell";
-    protected String name;
-    protected int cost;
-    protected int required_level;
     protected double damage;
     protected double mana_cost;
     protected static ArrayList<Spell> all = new ArrayList<>();
+
+    public Spell(String name, int cost, int required_level, int damage, int mana_cost){
+        super(name, cost, required_level);
+        this.damage = damage;
+        this.mana_cost = mana_cost;
+    }
 
     //adds all existing spells to array
     public static void existingTypes(){

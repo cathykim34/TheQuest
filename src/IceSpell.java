@@ -2,20 +2,12 @@ import java.util.ArrayList;
 
 public class IceSpell extends Spell implements Buyable{
     protected String type = "IceSpell";
-    protected String name;
-    protected int cost;
-    protected int required_level;
-    protected double damage;
-    protected double mana_cost;
     protected static ArrayList<Spell> all = new ArrayList<>();
 
-    public IceSpell(String name, int cost, int required_level, int damage, int mana_cost){
-        this.name = name;
-        this.cost = cost;
-        this.required_level = required_level;
-        this.damage = damage;
-        this.mana_cost = mana_cost;
+    public IceSpell(String name, int cost, int required_level, int damage, int mana_cost) {
+        super(name, cost, required_level, damage, mana_cost);
     }
+
     //check whether high enough level + enough money
     @Override
     public <T extends Hero> boolean isPossibleToBuy(T h) {

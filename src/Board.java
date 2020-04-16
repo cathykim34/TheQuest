@@ -163,7 +163,7 @@ public class Board {
                 return true;
             } else{
                 System.out.println("Cannot teleport to fellow hero");
-                System.out.println("Try teleporting to a lane with exactly one other hero");
+                System.out.println("Try teleporting to a lane with a hero who has an open cell next to them.");
                 return false;
             }
         } else {

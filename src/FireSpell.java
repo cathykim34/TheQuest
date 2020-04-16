@@ -2,20 +2,12 @@ import java.util.ArrayList;
 
 public class FireSpell extends Spell implements Buyable{
     protected String type = "FireSpell";
-    protected String name;
-    protected int cost;
-    protected int required_level;
-    protected double damage;
-    protected double mana_cost;
     protected static ArrayList<Spell> all = new ArrayList<>();
 
-    public FireSpell(String name, int cost, int required_level, int damage, int mana_cost){
-        this.name = name;
-        this.cost = cost;
-        this.required_level = required_level;
-        this.damage = damage;
-        this.mana_cost = mana_cost;
+    public FireSpell(String name, int cost, int required_level, int damage, int mana_cost) {
+        super(name, cost, required_level, damage, mana_cost);
     }
+
 
     //list of all required spells
     public static void existingTypes() {

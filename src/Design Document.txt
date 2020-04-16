@@ -4,7 +4,7 @@ Catherine Kim (U51788489)
 
 Classes:
 
-Items: This is a completely new class that we added because it allows encapsulation of items that can be used or stored in a hero’s backpack (armory, weapon, potions, spells).
+Items: This is a completely new class that we added because it allows encapsulation of items that can be used or stored in a hero’s backpack (armory, weapon, potions, spells) and has a constructor and attributes that all items share and can call.
 
 Wallet: This class is exactly the same as the previous implementation of Catherine’s code with the purpose to add a level of abstraction to money transactions within the market or after a fight
 

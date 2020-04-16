@@ -1,15 +1,10 @@
 import java.util.*;
 public class Armory extends Item implements Buyable{
-    protected String name;
-    protected int cost;
-    protected int required_level;
     protected int damage_reduction;
     protected boolean currently_using;
     protected static ArrayList<Armory> all = new ArrayList<>();
     public Armory(String name, int cost, int required_level, int damage_reduction){
-        this.name = name;
-        this.cost = cost;
-        this.required_level = required_level;
+        super(name,cost,required_level);
         this.damage_reduction = damage_reduction;
         this.currently_using = false;
     }
