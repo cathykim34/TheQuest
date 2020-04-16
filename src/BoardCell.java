@@ -204,6 +204,7 @@ public class BoardCell {
         if (needsRevive) {
             hero.revive();
             System.out.println(hero.getName() + "'s health is restored!");
+            return;
         }
 
         Scanner input = new Scanner(System.in);
